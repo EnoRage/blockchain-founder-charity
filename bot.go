@@ -69,6 +69,38 @@ func main() {
 		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
+	b.Handle(&inlineBtn2, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn3, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn4, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn5, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn6, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn7, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn8, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineBtn9, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 	// inline buttons 1-9
 	b.Start()
 }
