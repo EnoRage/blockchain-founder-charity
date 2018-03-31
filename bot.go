@@ -17,6 +17,7 @@ import (
 var fond = ""
 var sum = ""
 var concurrency = ""
+var rubsum = ""
 
 // для диалогов переменные
 
@@ -68,11 +69,12 @@ func main() {
 	println(currencyBalanceResult.String())
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
-	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
+	replyBtn2 := tb.ReplyButton{Text: "💸 Пожертвование"}
 	replyKeys := [][]tb.ReplyButton{
 		[]tb.ReplyButton{replyBtn1},
 		[]tb.ReplyButton{replyBtn2},
 	}
+	inlineBtn0 := tb.InlineButton{Unique: "0", Text: "0️⃣"}
 	inlineBtn1 := tb.InlineButton{Unique: "1", Text: "1️⃣"}
 	inlineBtn2 := tb.InlineButton{Unique: "2", Text: "2️⃣"}
 	inlineBtn3 := tb.InlineButton{Unique: "3", Text: "3️⃣"}
@@ -83,7 +85,7 @@ func main() {
 	// inlineBtn8 := tb.InlineButton{Unique: "8", Text: "8️⃣"}
 
 	inlineKbrdCalc := [][]tb.InlineButton{
-		{inlineBtn1, inlineBtn2, inlineBtn3, inlineBtn4, inlineBtn5, inlineBtn6},
+		{inlineBtn0, inlineBtn1, inlineBtn2, inlineBtn3, inlineBtn4, inlineBtn5, inlineBtn6},
 	}
 
 	inlineInv := tb.InlineButton{Unique: "inv", Text: "Перевести"}
@@ -140,6 +142,11 @@ func main() {
 	// тут переход в список фондов с пожертвованиями
 
 	// inline buttons 1-9 Инфа о фондах
+
+	b.Handle(&inlineBtn0, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 	b.Handle(&inlineBtn1, func(c *tb.Callback) {
 		b.Edit(c.Message, orglist.Data1, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
@@ -177,52 +184,43 @@ func main() {
 
 	// слушает какой фонд выбрал
 	b.Handle("/fond0", func(m *tb.Message) {
-		fond = "1"
+		fond = "Bill & Melinda Gates Foundation"
 		b.Send(m.Sender, orglist.DataAdd, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond1", func(m *tb.Message) {
-		fond = "2"
+		fond = "Подари Жизнь"
 		b.Send(m.Sender, orglist.DataAdd1, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond2", func(m *tb.Message) {
-		fond = "3"
+		fond = "Welcome Trust"
 		b.Send(m.Sender, orglist.DataAdd2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond3", func(m *tb.Message) {
-		fond = "4"
+		fond = "Ford Foundation"
 		b.Send(m.Sender, orglist.DataAdd3, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond4", func(m *tb.Message) {
-		fond = "5"
+		fond = "Linux Foundation"
 		b.Send(m.Sender, orglist.DataAdd4, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond5", func(m *tb.Message) {
-		fond = "6"
+		fond = "Ethereum Foundation"
 		b.Send(m.Sender, orglist.DataAdd5, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond6", func(m *tb.Message) {
-		fond = "7"
+		fond = "РусФонда"
 		b.Send(m.Sender, orglist.DataAdd6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
-	// b.Handle("/fond7", func(m *tb.Message) {
-	// 	fond = "8"
-	// 	b.Send(m.Sender, orglist.DataAdd7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
-	// })
-	// b.Handle("/fond8", func(m *tb.Message) {
-	// 	fond = "9"
-	// 	b.Send(m.Sender, orglist.DataAdd8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
-	// })
+
 	// слушает какой фонд выбрал
 
-	// при нажатии кнопки пожертвовать происходит оплата
-	// b.Handle(&inlineInv, func(c *tb.Callback) {
-	// 	var msg = orglist.EnterSum + "Текущая сумма: " + sum
-	// 	b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
-	// 	b.Respond(c, &tb.CallbackResponse{})
-	// })
-	// при нажатии кнопки пожертвовать происходит оплата
-
 	// тут клавиатурка по занесению денег
+	b.Handle(&inlineklav0, func(c *tb.Callback) {
+		sum += "0"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 	b.Handle(&inlineklav1, func(c *tb.Callback) {
 		sum += "1"
 		var msg = orglist.EnterSum + "Текущая сумма: " + sum
@@ -299,7 +297,7 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklavapply, func(c *tb.Callback) {
-		var msg = "Текущая сумма: " + sum + "\n\nВы готовы перевести фонду " + fond
+		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + rubsum + "* `RUB`"
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
@@ -307,7 +305,7 @@ func main() {
 
 	// Выбрать валюту после фонда
 	b.Handle(&inlineInv, func(c *tb.Callback) {
-		var msg = "Выберите валюту для перевода: "
+		var msg = "Выберите валюту для перевода: \n\n`Только для ETH доступна операция отслеживания того, что делает организация`"
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineCurrency})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
@@ -345,6 +343,9 @@ func main() {
 	// final apply
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
 		var msg = "Перевод совершен успешно, подробности в личном кабинете"
+		concurrency = ""
+		sum = ""
+		fond = ""
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
 		b.Send(c.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 		b.Respond(c, &tb.CallbackResponse{})
