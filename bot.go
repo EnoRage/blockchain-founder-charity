@@ -56,6 +56,8 @@ func main() {
 	wavesBalanceResult = waves.GetWavesBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2")
 	// Получаем баланс аккаунта в другой валюте
 	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetId(objects.ZCash))
+	// Создание Seed
+	seed := waves.CreateSeed()
 
 	//Тест mongoDB
 	// Добавление фонда
@@ -70,6 +72,7 @@ func main() {
 	println(courseResult.String())
 	println(wavesBalanceResult.String())
 	println(currencyBalanceResult.String())
+	println(seed.String())
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Пожертвование"}
