@@ -18,8 +18,7 @@ var courseInterface interface{}
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
-
+		Token:  "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
