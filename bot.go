@@ -1,19 +1,21 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"time"
 
 	"./course"
+<<<<<<< HEAD
+	"github.com/tidwall/gjson"
+=======
 	"./orglist"
+>>>>>>> 6bc76a11dd3d6052192b3c11a5275fa460375f6e
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 var courseJSON []byte
-
+var courseArray gjson.Result
 var courseInterface interface{}
 
 func main() {
@@ -23,9 +25,11 @@ func main() {
 	})
 
 	// Тест курсов
+	// Получаем JSON формат курсов
 	courseJSON = course.Course("USD")
-	json.Unmarshal(courseJSON, &courseInterface)
-	fmt.Printf("%+v\n", courseInterface)
+	// Берём конкретное значение по кусам
+	courseArray = gjson.Get(string(courseJSON), "WAVES")
+	println(courseArray.String())
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
