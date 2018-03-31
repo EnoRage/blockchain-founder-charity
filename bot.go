@@ -69,7 +69,8 @@ func main() {
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
 	replyKeys := [][]tb.ReplyButton{
-		{replyBtn1, replyBtn2},
+		[]tb.ReplyButton{replyBtn1},
+		[]tb.ReplyButton{replyBtn2},
 	}
 	inlineBtn1 := tb.InlineButton{Unique: "1", Text: "1️⃣"}
 	inlineBtn2 := tb.InlineButton{Unique: "2", Text: "2️⃣"}
@@ -124,7 +125,7 @@ func main() {
 		if !m.Private() {
 			return
 		}
-		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Send(m.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
 	// тут переход в список фондов с пожертвованиями
 	b.Handle(&replyBtn2, func(m *tb.Message) {
@@ -174,39 +175,39 @@ func main() {
 	// слушает какой фонд выбрал
 	b.Handle("/fond0", func(m *tb.Message) {
 		fond = "1"
-		b.Send(m.Sender, "0 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond1", func(m *tb.Message) {
 		fond = "2"
-		b.Send(m.Sender, "Первый фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd1, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond2", func(m *tb.Message) {
 		fond = "3"
-		b.Send(m.Sender, "2 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond3", func(m *tb.Message) {
 		fond = "4"
-		b.Send(m.Sender, "3 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd3, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond4", func(m *tb.Message) {
 		fond = "5"
-		b.Send(m.Sender, "4 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd4, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond5", func(m *tb.Message) {
 		fond = "6"
-		b.Send(m.Sender, "5 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd5, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond6", func(m *tb.Message) {
 		fond = "7"
-		b.Send(m.Sender, "6 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond7", func(m *tb.Message) {
 		fond = "8"
-		b.Send(m.Sender, "7 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond8", func(m *tb.Message) {
 		fond = "9"
-		b.Send(m.Sender, "8 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		b.Send(m.Sender, orglist.DataAdd8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	// слушает какой фонд выбрал
 
@@ -305,7 +306,7 @@ func main() {
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
 		var msg = "Перевод совершен успешно, подробности в личном кабинете"
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
-		b.Send(c.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Send(c.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// final apply
