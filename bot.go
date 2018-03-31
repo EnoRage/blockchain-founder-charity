@@ -56,6 +56,28 @@ func main() {
 	inlineInvMenu := [][]tb.InlineButton{
 		{inlineInv},
 	}
+
+	inlineklav0 := tb.InlineButton{Unique: "0", Text: "0️⃣"}
+	inlineklav1 := tb.InlineButton{Unique: "1", Text: "1️⃣"}
+	inlineklav2 := tb.InlineButton{Unique: "2", Text: "2️⃣"}
+	inlineklav3 := tb.InlineButton{Unique: "3", Text: "3️⃣"}
+	inlineklav4 := tb.InlineButton{Unique: "4", Text: "4️⃣"}
+	inlineklav5 := tb.InlineButton{Unique: "5", Text: "5️⃣"}
+	inlineklav6 := tb.InlineButton{Unique: "6", Text: "6️⃣"}
+	inlineklav7 := tb.InlineButton{Unique: "7", Text: "7️⃣"}
+	inlineklav8 := tb.InlineButton{Unique: "8", Text: "8️⃣"}
+	inlineklav9 := tb.InlineButton{Unique: "9", Text: "9️⃣"}
+	inlineklavdot := tb.InlineButton{Unique: "dot", Text: " . "}
+	inlineklavapply := tb.InlineButton{Unique: "enter", Text: "✅ Подтвердить"}
+	inlineklavrenew := tb.InlineButton{Unique: "renew", Text: "🆕 Заново"}
+	inlineklavback := tb.InlineButton{Unique: "remove", Text: "❌ Назад"}
+	inlineklavdellast := tb.InlineButton{Unique: "last", Text: "⬅️"}
+	inlineKbrdsum := [][]tb.InlineButton{
+		{inlineklav1, inlineklav2, inlineklav3}, {inlineklav4, inlineklav5, inlineklav6},
+		{inlineklav7, inlineklav8, inlineklav9}, {inlineklavdot, inlineklav0, inlineklavdellast},
+		{inlineklavrenew, inlineklavback}, {inlineklavapply},
+	}
+
 	course.Course("USD")
 
 	if err != nil {
@@ -155,9 +177,14 @@ func main() {
 
 	// при нажатии кнопки пожертвовать происходит оплата
 	b.Handle(&inlineInv, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data9, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, "Введите сумму", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// при нажатии кнопки пожертвовать происходит оплата
+
+	// тут клавиатурка по занесению денег
+
+	// тут клавиатурка по занесению денег
+
 	b.Start()
 }
