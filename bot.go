@@ -66,7 +66,8 @@ func main() {
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
 	replyKeys := [][]tb.ReplyButton{
-		{replyBtn1, replyBtn2},
+		[]tb.ReplyButton{replyBtn1},
+		[]tb.ReplyButton{replyBtn2},
 	}
 	inlineBtn1 := tb.InlineButton{Unique: "1", Text: "1️⃣"}
 	inlineBtn2 := tb.InlineButton{Unique: "2", Text: "2️⃣"}
@@ -121,7 +122,7 @@ func main() {
 		if !m.Private() {
 			return
 		}
-		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Send(m.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
 	// тут переход в список фондов с пожертвованиями
 	b.Handle(&replyBtn2, func(m *tb.Message) {
@@ -302,7 +303,7 @@ func main() {
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
 		var msg = "Перевод совершен успешно, подробности в личном кабинете"
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
-		b.Send(c.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Send(c.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// final apply
