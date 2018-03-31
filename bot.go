@@ -10,7 +10,7 @@ import (
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		Token:  "TOKEN_HERE",
+		Token:  "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
