@@ -33,5 +33,8 @@ func main() {
 		}
 		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
+	b.Handle(&replyBtn2, func(m *tb.Message) {
+		b.Send(m.Sender, "Список благотворительных организаций: ")
+	})
 	b.Start()
 }
