@@ -36,7 +36,7 @@ func AddFoundation(name string, foundedDate int32, capital float32, country stri
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("Foundations")
+	c := session.DB("BlockChainDB").C("foundations")
 	err = c.Insert(&Foundations{Name: name, FoundedDate: foundedDate, Capital: capital, Country: country, Mission: mission})
 
 	if err != nil {

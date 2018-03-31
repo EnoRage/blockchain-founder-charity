@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"./course"
+	"./ethereum"
 	"./objects"
 	"./orglist"
 	"./waves"
@@ -29,8 +30,9 @@ var currencyBalanceResult gjson.Result
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
-		Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
+		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY", //продакшн @bf_charity_bot
+		Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
+		// Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -59,6 +61,12 @@ func main() {
 	// Создание Seed
 	seed := waves.CreateSeed()
 
+	// Тест подключения nodejs
+	// Получаем privateKey
+	prvtKey := ethereum.CreatePrvtKey()
+	// Получаем адрес
+	address := ethereum.GetAddress(prvtKey)
+
 	//Тест mongoDB
 	// Добавление фонда
 	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
@@ -73,6 +81,8 @@ func main() {
 	println(wavesBalanceResult.String())
 	println(currencyBalanceResult.String())
 	println(seed.String())
+	println(prvtKey)
+	println(address)
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Пожертвование"}
