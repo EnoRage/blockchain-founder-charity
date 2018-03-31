@@ -8,33 +8,62 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type Person struct {
-	Name  string
-	Phone string
+type Foundations struct {
+	Name        string  `bson:"Name"`
+	FoundedDate int32   `bson:"FoundedDate"`
+	Capital     float32 `bson:"Capital"`
+	Country     string  `bson:"Country"`
+	Mission     string  `bson:"Mission"`
 }
 
 // mongo ferfer
-func InitMongo() {
+func ConnectToMongo() (*mgo.Session, error) {
 	session, err := mgo.Dial("mongodb://admin:itss2018!@medicineassistantdb.westeurope.cloudapp.azure.com:27017")
 	if err != nil {
 		panic(err)
 	}
-	defer session.Close()
 
 	session.SetMode(mgo.Monotonic, true)
 
-	c := session.DB("BlockChainDB").C("people")
-	err = c.Insert(&Person{"Ale", "+55 53 8116 9639"},
-		&Person{"Cla", "+55 53 8402 8510"})
+	return session, err
+}
+
+func CloseMongoConnection(session *mgo.Session) {
+	session.Close()
+}
+
+func AddFoundation(name string, foundedDate int32, capital float32, country string, mission string) {
+	session, err := ConnectToMongo()
+	defer CloseMongoConnection(session)
+
+	c := session.DB("BlockChainDB").C("Foundations")
+	err = c.Insert(&Foundations{Name: name, FoundedDate: foundedDate, Capital: capital, Country: country, Mission: mission})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func FindAllFoundations() {
+	session, err := ConnectToMongo()
+	defer CloseMongoConnection(session)
+
+	c := session.DB("BlockChainDB").C("Foundations")
+	// result := []Foundations{}
+	// var result []Foundations
+	// c.Find(nil).All(&result)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	result := Person{}
-	err = c.Find(bson.M{"name": "Ale"}).One(&result)
-	if err != nil {
-		log.Fatal(err)
+	item := Foundations{}
+
+	find := c.Find(bson.M{})
+
+	items := find.Iter()
+	for items.Next(&item) {
+		fmt.Println(item)
 	}
 
-	fmt.Println("Phone:", result.Phone)
+	// fmt.Println(result)
 }
