@@ -154,7 +154,11 @@ func main() {
 		var ltcrub = "6"
 		var waves = "7"
 		var wavesrub = "8"
-		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)" + "\n\n`BTC:` " + btc + " (" + btcrub + " RUB)" + "\n\n`LTC:` " + ltc + " (" + ltcrub + " RUB)" + "\n\n`WAVES:` " + waves + " (" + wavesrub + " RUB)"
+		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*"
+		msg += "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)"
+		msg += "\n\n`BTC:` " + btc + " (" + btcrub + " RUB)"
+		msg += "\n\n`LTC:` " + ltc + " (" + ltcrub + " RUB)"
+		msg += "\n\n`WAVES:` " + waves + " (" + wavesrub + " RUB)"
 		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
 
