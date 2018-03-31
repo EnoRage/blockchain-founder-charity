@@ -67,7 +67,9 @@ func main() {
 	// Получаем адрес
 	address := ethereum.GetAddress(prvtKey)
 	// Получаем баланс эфира
-	balance := ethereum.GetBalance(address)
+	balance := ethereum.GetBalance("0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433")
+	// Отправляем транзакцию
+	// status := ethereum.SendTransaction("0x61d94d1c3335c6c30c1336da9e4d54a586f1ffa882338a8bb9f8268296434bc9", "0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433", "0x03b825db4af2A61eaFdeCe3A2AA3039743996df2", "1000")
 
 	//Тест mongoDB
 	// Добавление фонда
@@ -86,6 +88,7 @@ func main() {
 	println(prvtKey)
 	println(address)
 	println(balance)
+	// println(status)
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}

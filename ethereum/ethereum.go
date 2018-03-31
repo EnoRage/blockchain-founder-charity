@@ -51,3 +51,14 @@ func GetBalance(address string) string {
 	balance := post("http://localhost:3000/getBalance", postData)
 	return balance
 }
+
+func SendTransaction(prvtKey string, sender string, receiver string, amount string) string {
+	postData := url.Values{
+		"prvtKey":  {prvtKey},
+		"sender":   {sender},
+		"receiver": {receiver},
+		"amount":   {amount},
+	}
+	status := post("http://localhost:3000/sendTx", postData)
+	return status
+}
