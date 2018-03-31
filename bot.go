@@ -113,6 +113,12 @@ func main() {
 
 	inlinуvapply := tb.InlineButton{Unique: "apply", Text: "✅ Подтвердить"}
 	inlineKbrdaply := [][]tb.InlineButton{{inlinуvapply}}
+
+	inlineBtnWAV := tb.InlineButton{Unique: "WAVES", Text: "📈 WAVES"}
+	inlineBtnBTC := tb.InlineButton{Unique: "BTC", Text: "📈 BTC"}
+	inlineBtnETH := tb.InlineButton{Unique: "ETH", Text: "📈 ETH"}
+	inlineBtnLTC := tb.InlineButton{Unique: "LTC", Text: "📈 LTC"}
+	inlineCurrency := [][]tb.InlineButton{{inlineBtnWAV, inlineBtnBTC}, {inlineBtnETH, inlineBtnLTC}}
 	course.Course("USD")
 
 	if err != nil {
@@ -297,6 +303,10 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// тут клавиатурка по занесению денег
+
+	// Выбрать валюту после фонда
+
+	// Выбрать валюту после фонда
 
 	// final apply
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
