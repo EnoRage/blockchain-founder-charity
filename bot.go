@@ -66,6 +66,8 @@ func main() {
 	prvtKey := ethereum.CreatePrvtKey()
 	// Получаем адрес
 	address := ethereum.GetAddress(prvtKey)
+	// Получаем баланс эфира
+	balance := ethereum.GetBalance(address)
 
 	//Тест mongoDB
 	// Добавление фонда
@@ -83,6 +85,7 @@ func main() {
 	println(seed.String())
 	println(prvtKey)
 	println(address)
+	println(balance)
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}

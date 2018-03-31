@@ -8,10 +8,8 @@ import (
 	"net/url"
 )
 
-func post(url1 string, prvtKey string) string {
-	form := url.Values{
-		"prvtKey": {prvtKey},
-	}
+func post(url1 string, data url.Values) string {
+	form := data
 	body1 := bytes.NewBufferString(form.Encode())
 	req, err := http.NewRequest("POST", url1, body1)
 	if err != nil {
@@ -31,12 +29,25 @@ func post(url1 string, prvtKey string) string {
 }
 
 func CreatePrvtKey() string {
-	prvtKey := post("http://localhost:3000/createEthAccount", "{}")
+	postData := url.Values{
+		"nil": {},
+	}
+	prvtKey := post("http://localhost:3000/createEthAccount", postData)
 	return prvtKey
 }
 
 func GetAddress(prvtKey string) string {
-	postData := prvtKey
+	postData := url.Values{
+		"prvtKey": {prvtKey},
+	}
 	address := post("http://localhost:3000/getAddress", postData)
 	return address
+}
+
+func GetBalance(address string) string {
+	postData := url.Values{
+		"address": {address},
+	}
+	balance := post("http://localhost:3000/getBalance", postData)
+	return balance
 }
