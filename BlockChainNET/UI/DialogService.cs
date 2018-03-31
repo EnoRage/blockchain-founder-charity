@@ -1,4 +1,6 @@
 ﻿using System;
+using Acr.UserDialogs;
+using BlockChainHack.Helpers;
 using Xamarin.Forms;
 
 namespace BlockChainHack.UI

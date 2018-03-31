@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms.Internals;
+using BlockChainHack.Helpers;
+using BlockChainHack.UI;
+using BlockChainNET;
+using Plugin.Connectivity;
+using Xamarin.Forms;
 
 namespace BlockChainHack.BL.ViewModels
 {
@@ -13,7 +19,7 @@ namespace BlockChainHack.BL.ViewModels
         readonly CancellationTokenSource _networkTokenSource = new CancellationTokenSource();
         readonly ConcurrentDictionary<string, ICommand> _cachedCommands = new ConcurrentDictionary<string, ICommand>();
 
-        public NavigationModel NavigationMode { get; set; }
+        public NavigationMode NavigationMode { get; set; }
 
         protected Dictionary<string, object> NavigationParams
         {

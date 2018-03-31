@@ -1,6 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using BlockChainHack.BL.ViewModels;
+using BlockChainHack.Helpers;
+using BlockChainNET;
+using BlockChainNET.UI.Pages;
 using Xamarin.Forms;
 
 namespace BlockChainHack.UI
@@ -47,7 +54,8 @@ namespace BlockChainHack.UI
             if (string.IsNullOrEmpty(masterName?.ToString())) throw new ArgumentNullException(nameof(masterName));
             if (string.IsNullOrEmpty(detailName?.ToString())) throw new ArgumentNullException(nameof(detailName));
 
-            Action setMainPage = () => {
+            Action setMainPage = () =>
+            {
                 _isBusy = true;
 
                 var masterDetailPage = new MasterDetailPage
@@ -93,7 +101,8 @@ namespace BlockChainHack.UI
             if (_app == null) throw new FieldAccessException(@"App property not set. Use Init() before navigation");
             if (_navigations.Count == 0) throw new FieldAccessException(@"Navigation is null. Add NavigationPage first");
 
-            Device.BeginInvokeOnMainThread(async () => {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
                 _isBusy = true;
 
                 try
@@ -118,7 +127,8 @@ namespace BlockChainHack.UI
             if (_app == null) throw new FieldAccessException(@"Application property not set. Use Init() before navigation");
             if (_navigations.Count == 0) throw new FieldAccessException(@"Navigation is null. Add NavigationPage first");
 
-            Device.BeginInvokeOnMainThread(async () => {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
                 _isBusy = true;
 
                 try
