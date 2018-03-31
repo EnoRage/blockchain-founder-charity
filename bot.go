@@ -93,6 +93,8 @@ func main() {
 		{inlineklavrenew, inlineklavback}, {inlineklavapply},
 	}
 
+	inlinуvapply := tb.InlineButton{Unique: "apply", Text: "✅ Подтвердить"}
+	inlineKbrdaply := [][]tb.InlineButton{{inlinуvapply}}
 	course.Course("USD")
 
 	if err != nil {
@@ -253,7 +255,42 @@ func main() {
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
+	b.Handle(&inlineklavdot, func(c *tb.Callback) {
+		sum += "."
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavrenew, func(c *tb.Callback) {
+		sum = ""
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavdellast, func(c *tb.Callback) {
+		sz := len(sum)
+		if sz > 0 {
+			sum = sum[:sz-1]
+		}
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavapply, func(c *tb.Callback) {
+		var msg = "Текущая сумма: " + sum + "\n\nВы готовы перевести фонду " + fond
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 	// тут клавиатурка по занесению денег
+
+	// final apply
+	b.Handle(&inlinуvapply, func(c *tb.Callback) {
+		var msg = "Перевод совершен успешно, подробности в личном кабинете"
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Send(c.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// final apply
 
 	b.Start()
 }
