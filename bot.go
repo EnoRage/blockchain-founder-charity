@@ -6,10 +6,7 @@ import (
 
 	"./course"
 	"./orglist"
-<<<<<<< HEAD
 	"./waves"
-=======
->>>>>>> 2a22173470f385a5a141e7d31dd5a434137392f6
 	"github.com/tidwall/gjson"
 
 	tb "gopkg.in/tucnak/telebot.v2"
