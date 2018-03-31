@@ -53,6 +53,24 @@ namespace BlockChainMobileBack.Models
 
         public string Adress { get; set; } = "";
     }
+
+    public class TransactionHistory
+    {
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        [BsonId]
+        public string Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public string OrgId { get; set; }
+
+        //gggg.mm.dd*hh:mm:ss
+        public string DateTime { get; set; }
+
+        public float Summ { get; set; }
+    }
     /*
 name
 foundedDate

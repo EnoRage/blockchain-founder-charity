@@ -15,5 +15,7 @@ namespace BlockChainMobileBack.Repository
         Task<IEnumerable<FoundationOptions>> GetFoundations();
         Task AddUser(string id, string pass);
         Task<bool> CheckUserReg(string id, string pass);
+        Task<IEnumerable<TransactionHistory>> GetUsersTransaction(string usersId);
+        Task AddUsersTransaction(string usersId, string orgId, float sum);
     }
 }

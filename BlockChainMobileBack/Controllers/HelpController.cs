@@ -38,6 +38,10 @@ namespace BlockChainMobileBack.Controllers
 
                 //init UserBD
                 await _dataBaseRepository.AddUser("Test", "Test");
+
+                //init transaction
+
+                TransactionHistory th = new TransactionHistory();
             }
             return "Done";
         }

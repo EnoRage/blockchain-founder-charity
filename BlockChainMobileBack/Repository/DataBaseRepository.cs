@@ -4,6 +4,7 @@ using BlockChainMobileBack.Models;
 using System.Linq;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System;
 
 namespace BlockChainMobileBack.Repository
 {
@@ -32,21 +33,42 @@ namespace BlockChainMobileBack.Repository
 
         public async Task<bool> CheckUserReg(string id, string pass)
         {
-            bool result = false;
             var andFilter = Builders<User>.Filter.And(
                 Builders<User>.Filter.Eq("Name", id),
                 Builders<User>.Filter.Eq("Password", pass));
 
-            result = (await _context.UsersCollection.Find(andFilter).ToListAsync()).FirstOrDefault() != null;
-            return result;
+            return (await _context.UsersCollection.Find(andFilter).ToListAsync())
+                    .FirstOrDefault() != null;
         }
 
         public async Task<IEnumerable<FoundationOptions>> GetFoundations()
         {
             var filter = Builders<FoundationOptions>.Filter.Empty;
+            return await _context.FoundationsCollection.Find(filter).ToListAsync(); ;
+        }
 
-            List<FoundationOptions> tmp = await _context.FoundationsCollection.Find(filter).ToListAsync();
-            return tmp;
+        public async Task<IEnumerable<TransactionHistory>> GetUsersTransaction(string usersId)
+        {
+            var filter = Builders<TransactionHistory>.Filter.Eq("UserId", usersId);
+            return await _context.TransactionCollection.Find(filter).ToListAsync();
+        }
+
+        private static string DateTimeConverter(DateTime inp)
+        {
+            //gggg.mm.dd*hh:mm:ss
+            return $"{inp.Year}.{inp.Month}.{inp.Day}*{inp.Hour}:{inp.Minute}:{inp.Second}";
+        }
+
+        public async Task AddUsersTransaction(string usersId, string orgId, float sum)
+        {
+            TransactionHistory tmp = new TransactionHistory()
+            {
+                UserId = usersId,
+                OrgId = orgId,
+                DateTime = DateTimeConverter(DateTime.UtcNow),
+                Summ = sum
+            };
+            await _context.TransactionCollection.InsertOneAsync(tmp);
         }
     }
 }
