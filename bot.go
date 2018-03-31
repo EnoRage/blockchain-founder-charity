@@ -29,8 +29,8 @@ var currencyBalanceResult gjson.Result
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
-		// Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
+		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
+		Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -139,7 +139,16 @@ func main() {
 		if !m.Private() {
 			return
 		}
-		b.Send(m.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		var text = "Главное меню\n\nB Charity - стандарт участия в благотворительности."
+		text += "1. Выбираешь благотворительную организацию"
+		text += "2. Инвестируешь в конкретный  реальный проект"
+		text += "3. Принимаешь участие в реализации проекта"
+
+		text += "\n\nПочему Мы?"
+		text += "1. ПРЯМОЙ и безопасный перевод в организацию без посредников"
+		text += "2. Контроль расходов благотворительной организации"
+		text += "3. Активное участие и  социальная ответственность"
+		b.Send(m.Sender, text, &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
 	// тут переход в список фондов с пожертвованиями
 	b.Handle(&replyBtn2, func(m *tb.Message) {
