@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"./course"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
@@ -12,6 +13,8 @@ func main() {
 		Token:  "TOKEN_HERE",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
+
+	course.Course("USD")
 
 	if err != nil {
 		log.Fatal(err)
