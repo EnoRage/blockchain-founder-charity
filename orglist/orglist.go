@@ -1,25 +1,25 @@
 package orglist
 
 // Data Первый фонд Подари жизнь
-const Data = "*Список организаций:*\n\n*Фонд:* Bill & Melinda Gates Foundation\n\n*Информация о фонде:* The primary aims of the foundation are, globally, to enhance healthcare and reduce extreme poverty, and in America, to expand education and access to IT\n\nПодробнее *нажмите* на кнопку: /fond0"
+const Data = "*Список организаций:*\n\n*Фонд:* Bill & Melinda Gates Foundation\n\n*Информация о фонде:* The primary aims of the foundation are, globally, to enhance healthcare and reduce extreme poverty, and in America, to expand education and access to IT\n\nПодробнее *нажмите* на кнопку: /fond0\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // Data1 Первый фонд Подари жизнь
 const Data1 = "*Список организаций:*\n\n*Фонд:* Подари Жизнь\n\n*Информация о фонде:* негосударственный благотворительный фонд, созданный с целью помощи детям с онкологическими, гематологическими и другими тяжёлыми заболеваниями.\n\nПодробнее *нажмите* на кнопку: /fond1"
 
 // Data2 Первый фонд Подари жизнь
-const Data2 = "*Список организаций:*\n\n*Фонд:* Welcome Trust\n\n*Информация о фонде:* The aim of the Trust is to `achieve extraordinary improvements in health by supporting the brightest minds1`, and in addition to funding biomedical research it supports the public understanding of science.\n\nПодробнее *нажмите* на кнопку: /fond2"
+const Data2 = "*Список организаций:*\n\n*Фонд:* Welcome Trust\n\n*Информация о фонде:* The aim of the Trust is to `achieve extraordinary improvements in health by supporting the brightest minds1`, and in addition to funding biomedical research it supports the public understanding of science.\n\nПодробнее *нажмите* на кнопку: /fond2\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // Data3 Первый фонд Подари жизнь
-const Data3 = "*Список организаций:*\n\n*Фонд:* Ford Foundation\n\n*Информация о фонде:* For years, the foundation was the largest, and one of the most influential foundations in the world, with global reach and special interests in economic empowerment, education, human rights, democracy, the creative arts, and Third World development.\n\nПодробнее *нажмите* на кнопку: /fond3"
+const Data3 = "*Список организаций:*\n\n*Фонд:* Ford Foundation\n\n*Информация о фонде:* For years, the foundation was the largest, and one of the most influential foundations in the world, with global reach and special interests in economic empowerment, education, human rights, democracy, the creative arts, and Third World development.\n\nПодробнее *нажмите* на кнопку: /fond3\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // Data4 Первый фонд Подари жизнь
-const Data4 = "*Список организаций:*\n\n*Фонд:* Linux Foundation\n\n*Информация о фонде:* Build sustainable ecosystems around open source projects to accelerate technology development and commercial adoption.\n\nПодробнее *нажмите* на кнопку: /fond4"
+const Data4 = "*Список организаций:*\n\n*Фонд:* Linux Foundation\n\n*Информация о фонде:* Build sustainable ecosystems around open source projects to accelerate technology development and commercial adoption.\n\nПодробнее *нажмите* на кнопку: /fond4\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // Data5 Первый фонд Подари жизнь
-const Data5 = "*Список организаций:*\n\n*Фонд:* Ethereum Foundation\n\n*Информация о фонде:* родвижение и поддержка платформы Ethereum и исследований, разработок и образования базового уровня, чтобы принести децентрализованные протоколы и инструменты в мир, которые позволяют разработчикам создавать децентрализованные приложения следующего поколения (dapps), и вместе построить более глобально доступный, более свободный и более надежный Интернет.\n\nПодробнее *нажмите* на кнопку: /fond5"
+const Data5 = "*Список организаций:*\n\n*Фонд:* Ethereum Foundation\n\n*Информация о фонде:* родвижение и поддержка платформы Ethereum и исследований, разработок и образования базового уровня, чтобы принести децентрализованные протоколы и инструменты в мир, которые позволяют разработчикам создавать децентрализованные приложения следующего поколения (dapps), и вместе построить более глобально доступный, более свободный и более надежный Интернет.\n\nПодробнее *нажмите* на кнопку: /fond5\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // Data6 Первый фонд Подари жизнь
-const Data6 = "*Список организаций:*\n\n*Фонд:* РусФонда\n\n*Информация о фонде:* помощь тяжелобольным детям. Другие направления деятельности — поддержка медицинских учреждений (больницы, хосписы, мед.центры), поддержка развития новых медицинских технологий, организация обучения медицинских работников.\n\nПодробнее *нажмите* на кнопку: /fond6"
+const Data6 = "*Список организаций:*\n\n*Фонд:* РусФонда\n\n*Информация о фонде:* помощь тяжелобольным детям. Другие направления деятельности — поддержка медицинских учреждений (больницы, хосписы, мед.центры), поддержка развития новых медицинских технологий, организация обучения медицинских работников.\n\nПодробнее *нажмите* на кнопку: /fond6\n\nДля того, чтобы *посмотреть* все фонды, *используете* кнопки: 0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣"
 
 // EnterSum Используется во всех диалогах при вводе суммы
 var EnterSum = "Введите сумму, которую хотите инвестировать: \n\n"
