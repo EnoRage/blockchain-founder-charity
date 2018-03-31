@@ -8,7 +8,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-// Course Эта функция получает курс в RUB или USD через get запрос
+// GetBalance Получение баланса токена на блокчейне Waves
 func GetBalance(address string, assetID string) gjson.Result {
 	resp, err := http.Get("https://nodes.wavesnodes.com/assets/balance/" + address + "/" + assetID)
 	if err != nil {
@@ -31,6 +31,7 @@ func GetBalance(address string, assetID string) gjson.Result {
 	return balance
 }
 
+// GetWavesBalance Получение баланса WAVES
 func GetWavesBalance(address string) gjson.Result {
 	resp, err := http.Get("https://nodes.wavesnodes.com/addresses/balance/" + address)
 	if err != nil {
@@ -53,6 +54,7 @@ func GetWavesBalance(address string) gjson.Result {
 	return balance
 }
 
+// CreateSeed Создание Seed Waves
 func CreateSeed() gjson.Result {
 	resp, err := http.Get("https://nodes.wavesnodes.com/utils/seed")
 	if err != nil {
