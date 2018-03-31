@@ -26,7 +26,6 @@ func GetBalance(address string, assetID string) gjson.Result {
 		log.Fatal(err)
 	}
 
-	// Берём конкретное значение по кусам
 	balance := gjson.Get(string(body), "balance")
 	return balance
 }
@@ -49,7 +48,6 @@ func GetWavesBalance(address string) gjson.Result {
 		log.Fatal(err)
 	}
 
-	// Берём конкретное значение по кусам
 	balance := gjson.Get(string(body), "balance")
 	return balance
 }
@@ -72,7 +70,6 @@ func CreateSeed() gjson.Result {
 		log.Fatal(err)
 	}
 
-	// Берём конкретное значение по кусам
 	seed := gjson.Get(string(body), "seed")
 	return seed
 }

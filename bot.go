@@ -20,8 +20,6 @@ var sum = ""
 var concurrency = ""
 var rubsum = ""
 
-// для диалогов переменные
-
 var courseJSON []byte
 var courseResult gjson.Result
 
