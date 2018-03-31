@@ -142,6 +142,13 @@ func main() {
 	b.Handle(&replyBtn2, func(m *tb.Message) {
 		b.Send(m.Sender, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
+	b.Handle(&replyBtn1, func(m *tb.Message) {
+		var eth = "1"
+		var ethrub = "2"
+		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)"
+		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+	})
+
 	// тут переход в список фондов с пожертвованиями
 
 	// inline buttons 1-9 Инфа о фондах
