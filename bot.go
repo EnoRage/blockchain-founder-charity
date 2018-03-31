@@ -29,8 +29,8 @@ var currencyBalanceResult gjson.Result
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
-		Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
+		Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
+		// Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
