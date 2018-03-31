@@ -15,6 +15,7 @@ import (
 
 // для диалогов переменные
 var fond = ""
+var sum = ""
 
 // для диалогов переменные
 
@@ -85,6 +86,30 @@ func main() {
 	inlineInvMenu := [][]tb.InlineButton{
 		{inlineInv},
 	}
+
+	inlineklav0 := tb.InlineButton{Unique: "klav0", Text: "0️⃣"}
+	inlineklav1 := tb.InlineButton{Unique: "klav1", Text: "1️⃣"}
+	inlineklav2 := tb.InlineButton{Unique: "klav2", Text: "2️⃣"}
+	inlineklav3 := tb.InlineButton{Unique: "klav3", Text: "3️⃣"}
+	inlineklav4 := tb.InlineButton{Unique: "klav4", Text: "4️⃣"}
+	inlineklav5 := tb.InlineButton{Unique: "klav5", Text: "5️⃣"}
+	inlineklav6 := tb.InlineButton{Unique: "klav6", Text: "6️⃣"}
+	inlineklav7 := tb.InlineButton{Unique: "klav7", Text: "7️⃣"}
+	inlineklav8 := tb.InlineButton{Unique: "klav8", Text: "8️⃣"}
+	inlineklav9 := tb.InlineButton{Unique: "klav9", Text: "9️⃣"}
+	inlineklavdot := tb.InlineButton{Unique: "klavdot", Text: " . "}
+	inlineklavapply := tb.InlineButton{Unique: "enter", Text: "✅ Подтвердить"}
+	inlineklavrenew := tb.InlineButton{Unique: "renew", Text: "🆕 Заново"}
+	inlineklavback := tb.InlineButton{Unique: "remove", Text: "❌ Назад"}
+	inlineklavdellast := tb.InlineButton{Unique: "last", Text: "⬅️"}
+	inlineKbrdsum := [][]tb.InlineButton{
+		{inlineklav1, inlineklav2, inlineklav3}, {inlineklav4, inlineklav5, inlineklav6},
+		{inlineklav7, inlineklav8, inlineklav9}, {inlineklavdot, inlineklav0, inlineklavdellast},
+		{inlineklavrenew, inlineklavback}, {inlineklavapply},
+	}
+
+	inlinуvapply := tb.InlineButton{Unique: "apply", Text: "✅ Подтвердить"}
+	inlineKbrdaply := [][]tb.InlineButton{{inlinуvapply}}
 	course.Course("USD")
 
 	if err != nil {
@@ -184,9 +209,103 @@ func main() {
 
 	// при нажатии кнопки пожертвовать происходит оплата
 	b.Handle(&inlineInv, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data9, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// при нажатии кнопки пожертвовать происходит оплата
+
+	// тут клавиатурка по занесению денег
+	b.Handle(&inlineklav1, func(c *tb.Callback) {
+		sum += "1"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav2, func(c *tb.Callback) {
+		sum += "2"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav3, func(c *tb.Callback) {
+		sum += "3"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav4, func(c *tb.Callback) {
+		sum += "4"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav5, func(c *tb.Callback) {
+		sum += "5"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav6, func(c *tb.Callback) {
+		sum += "6"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav7, func(c *tb.Callback) {
+		sum += "7"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav8, func(c *tb.Callback) {
+		sum += "8"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklav9, func(c *tb.Callback) {
+		sum += "9"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavdot, func(c *tb.Callback) {
+		sum += "."
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavrenew, func(c *tb.Callback) {
+		sum = ""
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavdellast, func(c *tb.Callback) {
+		sz := len(sum)
+		if sz > 0 {
+			sum = sum[:sz-1]
+		}
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineklavapply, func(c *tb.Callback) {
+		var msg = "Текущая сумма: " + sum + "\n\nВы готовы перевести фонду " + fond
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// тут клавиатурка по занесению денег
+
+	// final apply
+	b.Handle(&inlinуvapply, func(c *tb.Callback) {
+		var msg = "Перевод совершен успешно, подробности в личном кабинете"
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Send(c.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// final apply
+
 	b.Start()
 }
