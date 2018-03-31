@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"./course"
+	"./orglist"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
@@ -34,7 +35,7 @@ func main() {
 		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
 	b.Handle(&replyBtn2, func(m *tb.Message) {
-		b.Send(m.Sender, "Список благотворительных организаций: ")
+		b.Send(m.Sender, orglist.Data)
 	})
 	b.Start()
 }
