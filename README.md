@@ -6,9 +6,13 @@
 Golang backend - Nick Kozlov, Kirill Kuznetov *Telegram bot*
 Mobile Xamarin - Max Spr.
 
-Тут несколько веток для жюри
+# Тут несколько веток для жюри
 
-master - golang telegram
+*master* - golang telegram bot на докере в кластере
 
-mobile - mobile app xamarin (C#)
+*backmobile / mobile* - mobile app xamarin (C#) кроссплатформенное мобильное приложение на C# и его Backend
+
+*NodeJs_backend* - часть Бэка - который связывает backmobile и golang bot
+
+*Solidity* - Ветка для SmartContracts, будем тестить и деплоить на NodeJs_backeng
 
