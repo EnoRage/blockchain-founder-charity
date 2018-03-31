@@ -14,6 +14,12 @@ func main() {
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
+	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
+	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
+	replyKeys := [][]tb.ReplyButton{
+		{replyBtn1, replyBtn2},
+	}
+
 	course.Course("USD")
 
 	if err != nil {
@@ -21,9 +27,11 @@ func main() {
 		return
 	}
 
-	b.Handle("/hello", func(m *tb.Message) {
-		b.Send(m.Sender, "hello world")
+	b.Handle("/start", func(m *tb.Message) {
+		if !m.Private() {
+			return
+		}
+		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
-
 	b.Start()
 }
