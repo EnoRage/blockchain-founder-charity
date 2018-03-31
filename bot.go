@@ -16,6 +16,7 @@ import (
 // для диалогов переменные
 var fond = ""
 var sum = ""
+var concurrency = ""
 
 // для диалогов переменные
 
@@ -214,11 +215,11 @@ func main() {
 	// слушает какой фонд выбрал
 
 	// при нажатии кнопки пожертвовать происходит оплата
-	b.Handle(&inlineInv, func(c *tb.Callback) {
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
+	// b.Handle(&inlineInv, func(c *tb.Callback) {
+	// 	var msg = orglist.EnterSum + "Текущая сумма: " + sum
+	// 	b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
 	// при нажатии кнопки пожертвовать происходит оплата
 
 	// тут клавиатурка по занесению денег
@@ -305,6 +306,39 @@ func main() {
 	// тут клавиатурка по занесению денег
 
 	// Выбрать валюту после фонда
+	b.Handle(&inlineInv, func(c *tb.Callback) {
+		var msg = "Выберите валюту для перевода: "
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineCurrency})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+
+	b.Handle(&inlineBtnWAV, func(c *tb.Callback) {
+		concurrency = "Waves"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+
+	b.Handle(&inlineBtnBTC, func(c *tb.Callback) {
+		concurrency = "Bitcoin"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+
+	b.Handle(&inlineBtnETH, func(c *tb.Callback) {
+		concurrency = "Ethereum"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+
+	b.Handle(&inlineBtnLTC, func(c *tb.Callback) {
+		concurrency = "Litecoin"
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 
 	// Выбрать валюту после фонда
 
