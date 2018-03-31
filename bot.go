@@ -22,19 +22,30 @@ func main() {
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
+	// Тест курсов
 	courseJSON = course.Course("USD")
-	// fmt.Printf("%v\n", p)
 	json.Unmarshal(courseJSON, &courseInterface)
 	fmt.Printf("%+v\n", courseInterface)
+
+	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
+	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
+	replyKeys := [][]tb.ReplyButton{
+		{replyBtn1, replyBtn2},
+	}
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	b.Handle("/hello", func(m *tb.Message) {
-		b.Send(m.Sender, "hello world")
+	b.Handle("/start", func(m *tb.Message) {
+		if !m.Private() {
+			return
+		}
+		b.Send(m.Sender, "Главное меню", &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
 	})
-
+	b.Handle(&replyBtn2, func(m *tb.Message) {
+		b.Send(m.Sender, "Список благотворительных организаций: ")
+	})
 	b.Start()
 }
