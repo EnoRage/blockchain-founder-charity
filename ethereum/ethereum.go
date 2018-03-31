@@ -8,6 +8,7 @@ import (
 	"net/url"
 )
 
+// post Пост запрос с параметрами в тело
 func post(url1 string, data url.Values) string {
 	form := data
 	body1 := bytes.NewBufferString(form.Encode())
@@ -28,6 +29,11 @@ func post(url1 string, data url.Values) string {
 	return string(body)
 }
 
+/*
+	Все взимодействия с блокчейном Ethereum происходят через post request к nodeJS серверу
+*/
+
+// CreatePrvtKey Создание секретного ключа эфира
 func CreatePrvtKey() string {
 	postData := url.Values{
 		"nil": {},
@@ -36,6 +42,7 @@ func CreatePrvtKey() string {
 	return prvtKey
 }
 
+// GetAddress Получение адреса эфира по секретному ключу
 func GetAddress(prvtKey string) string {
 	postData := url.Values{
 		"prvtKey": {prvtKey},
@@ -44,6 +51,7 @@ func GetAddress(prvtKey string) string {
 	return address
 }
 
+// GetBalance Получение баланса эфира по адресу
 func GetBalance(address string) string {
 	postData := url.Values{
 		"address": {address},
@@ -52,6 +60,7 @@ func GetBalance(address string) string {
 	return balance
 }
 
+// SendTransaction Отправка транзакций в блокчейн эфира
 func SendTransaction(prvtKey string, sender string, receiver string, amount string) string {
 	postData := url.Values{
 		"prvtKey":  {prvtKey},

@@ -7,8 +7,8 @@ import (
 )
 
 // Course Эта функция получает курс в RUB или USD через get запрос
-func Course(currency string) []byte {
-	resp, err := http.Get("https://min-api.cryptocompare.com/data/price?fsym=" + currency + "&tsyms=WAVES,BTC,ETH,ZEC,LTC,USD,EUR")
+func Course(outputCurrency string) []byte {
+	resp, err := http.Get("https://min-api.cryptocompare.com/data/price?fsym=" + outputCurrency + "&tsyms=WAVES,BTC,ETH,ZEC,LTC,USD,EUR")
 	if err != nil {
 		log.Fatal(err)
 	}

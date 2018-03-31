@@ -38,7 +38,7 @@ func main() {
 
 	// Тест объектов
 	// Получаем assetId конкретной валюты
-	assetId := objects.GetAssetId(objects.Bitcoin)
+	assetID := objects.GetAssetID(objects.Bitcoin)
 	// Получаем name конкретной валюты
 	name := objects.GetName(objects.Bitcoin)
 	// Получаем ticker конкретной валюты
@@ -57,7 +57,7 @@ func main() {
 	// Получаем баланс аккаунта в WAVES
 	wavesBalanceResult = waves.GetWavesBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2")
 	// Получаем баланс аккаунта в другой валюте
-	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetId(objects.ZCash))
+	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetID(objects.ZCash))
 	// Создание Seed
 	seed := waves.CreateSeed()
 
@@ -78,7 +78,7 @@ func main() {
 	// mongo.FindAllFoundations()
 
 	// Тестовые логи
-	println(assetId)
+	println(assetID)
 	println(name)
 	println(ticker)
 	println(courseResult.String())
