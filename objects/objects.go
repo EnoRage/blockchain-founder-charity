@@ -19,7 +19,7 @@ func GetTicker(e Currency) string {
 }
 
 func GetName(e Currency) string {
-	return e.name
+	return e.ticker
 }
 
 func GetAssetId(e Currency) string {
