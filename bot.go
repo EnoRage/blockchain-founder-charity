@@ -5,11 +5,8 @@ import (
 	"time"
 
 	"./course"
-<<<<<<< HEAD
-	"github.com/tidwall/gjson"
-=======
 	"./orglist"
->>>>>>> 6bc76a11dd3d6052192b3c11a5275fa460375f6e
+	"github.com/tidwall/gjson"
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
