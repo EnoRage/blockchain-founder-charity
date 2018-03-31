@@ -60,7 +60,14 @@ func main() {
 	})
 
 	b.Handle(&replyBtn2, func(m *tb.Message) {
-		b.Send(m.Sender, orglist.Data, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Send(m.Sender, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
+
+	// inline buttons 1-9
+	b.Handle(&inlineBtn1, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// inline buttons 1-9
 	b.Start()
 }
