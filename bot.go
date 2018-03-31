@@ -27,8 +27,8 @@ var currencyBalanceResult gjson.Result
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
-
+		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
+		Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -56,7 +56,10 @@ func main() {
 	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetId(objects.ZCash))
 
 	//Тест mongoDB
-	// mongo.InitMongo()
+	// Добавление фонда
+	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
+	// Поиск по фондам
+	// mongo.FindAllFoundations()
 
 	// Тестовые логи
 	println(assetId)
