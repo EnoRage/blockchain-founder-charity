@@ -75,12 +75,11 @@ func main() {
 	inlineBtn4 := tb.InlineButton{Unique: "4", Text: "4️⃣"}
 	inlineBtn5 := tb.InlineButton{Unique: "5", Text: "5️⃣"}
 	inlineBtn6 := tb.InlineButton{Unique: "6", Text: "6️⃣"}
-	inlineBtn7 := tb.InlineButton{Unique: "7", Text: "7️⃣"}
-	inlineBtn8 := tb.InlineButton{Unique: "8", Text: "8️⃣"}
-	inlineBtn9 := tb.InlineButton{Unique: "9", Text: "9️⃣"}
+	// inlineBtn7 := tb.InlineButton{Unique: "7", Text: "7️⃣"}
+	// inlineBtn8 := tb.InlineButton{Unique: "8", Text: "8️⃣"}
 
 	inlineKbrdCalc := [][]tb.InlineButton{
-		{inlineBtn1, inlineBtn2, inlineBtn3, inlineBtn4, inlineBtn5, inlineBtn6, inlineBtn7, inlineBtn8, inlineBtn9},
+		{inlineBtn1, inlineBtn2, inlineBtn3, inlineBtn4, inlineBtn5, inlineBtn6},
 	}
 
 	inlineInv := tb.InlineButton{Unique: "inv", Text: "Перевести"}
@@ -155,19 +154,16 @@ func main() {
 		b.Edit(c.Message, orglist.Data6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
-	b.Handle(&inlineBtn7, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
-	b.Handle(&inlineBtn8, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
-	b.Handle(&inlineBtn9, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data9, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
-	// inline buttons 1-9
+	// b.Handle(&inlineBtn7, func(c *tb.Callback) {
+	// 	b.Edit(c.Message, orglist.Data7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
+	// b.Handle(&inlineBtn8, func(c *tb.Callback) {
+	// 	b.Edit(c.Message, orglist.Data8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
+
+	// inline buttons 1-6
 
 	// слушает какой фонд выбрал
 	b.Handle("/fond0", func(m *tb.Message) {
@@ -198,14 +194,14 @@ func main() {
 		fond = "7"
 		b.Send(m.Sender, orglist.DataAdd6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
-	b.Handle("/fond7", func(m *tb.Message) {
-		fond = "8"
-		b.Send(m.Sender, orglist.DataAdd7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
-	})
-	b.Handle("/fond8", func(m *tb.Message) {
-		fond = "9"
-		b.Send(m.Sender, orglist.DataAdd8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
-	})
+	// b.Handle("/fond7", func(m *tb.Message) {
+	// 	fond = "8"
+	// 	b.Send(m.Sender, orglist.DataAdd7, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+	// })
+	// b.Handle("/fond8", func(m *tb.Message) {
+	// 	fond = "9"
+	// 	b.Send(m.Sender, orglist.DataAdd8, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+	// })
 	// слушает какой фонд выбрал
 
 	// при нажатии кнопки пожертвовать происходит оплата
