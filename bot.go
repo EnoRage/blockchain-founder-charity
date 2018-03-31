@@ -217,73 +217,73 @@ func main() {
 	// тут клавиатурка по занесению денег
 	b.Handle(&inlineklav0, func(c *tb.Callback) {
 		sum += "0"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav1, func(c *tb.Callback) {
 		sum += "1"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav2, func(c *tb.Callback) {
 		sum += "2"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav3, func(c *tb.Callback) {
 		sum += "3"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav4, func(c *tb.Callback) {
 		sum += "4"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav5, func(c *tb.Callback) {
 		sum += "5"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav6, func(c *tb.Callback) {
 		sum += "6"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav7, func(c *tb.Callback) {
 		sum += "7"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav8, func(c *tb.Callback) {
 		sum += "8"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklav9, func(c *tb.Callback) {
 		sum += "9"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklavdot, func(c *tb.Callback) {
 		sum += "."
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklavrenew, func(c *tb.Callback) {
 		sum = ""
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
@@ -292,7 +292,7 @@ func main() {
 		if sz > 0 {
 			sum = sum[:sz-1]
 		}
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
@@ -301,6 +301,14 @@ func main() {
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
+	b.Handle(&inlineklavback, func(c *tb.Callback) {
+		sum = ""
+		concurrency = ""
+		var msg = "Выберите валюту для перевода: \n\n`Только для ETH доступна операция отслеживания того, что делает организация`"
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineCurrency})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+
 	// тут клавиатурка по занесению денег
 
 	// Выбрать валюту после фонда
@@ -312,28 +320,28 @@ func main() {
 
 	b.Handle(&inlineBtnWAV, func(c *tb.Callback) {
 		concurrency = "Waves"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
 	b.Handle(&inlineBtnBTC, func(c *tb.Callback) {
 		concurrency = "Bitcoin"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
 	b.Handle(&inlineBtnETH, func(c *tb.Callback) {
 		concurrency = "Ethereum"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
 	b.Handle(&inlineBtnLTC, func(c *tb.Callback) {
 		concurrency = "Litecoin"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum
+		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
