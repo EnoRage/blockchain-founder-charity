@@ -12,7 +12,7 @@ Mobile Xamarin - Max Spr.
 
 *backmobile / mobile* - mobile app xamarin (C#) кроссплатформенное мобильное приложение на C# и его Backend
 
-*NodeJs_backend - часть Бэка - который связывает backmobile и golang bot
+*NodeJs_backend* - часть Бэка - который связывает backmobile и golang bot
 
 *Solidity* - Ветка для SmartContracts, будем тестить и деплоить на NodeJs_backeng
 
