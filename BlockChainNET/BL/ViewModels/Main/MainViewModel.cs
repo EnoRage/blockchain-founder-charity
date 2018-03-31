@@ -1,5 +1,5 @@
 ﻿using System;
-using BlockChainHack.BL.ViewModels;
+using BlockChainNET.BL.ViewModels;
 
 namespace BlockChainNET.BL.ViewModels.Main
 {

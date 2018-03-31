@@ -5,7 +5,6 @@
         Main
     }
 
-
     public enum NavigationMode
     {
         Normal,

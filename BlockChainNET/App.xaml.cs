@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BlockChainHack.UI;
+using BlockChainNET.UI;
+using BlockChainNET;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
-namespace BlockChainHack
+namespace BlockChainNET
 {
     public partial class App : Application
     {
@@ -18,7 +19,7 @@ namespace BlockChainHack
 
             NavigationService.Init(this);
             DialogService.Init(this);
-            NavigationService.Instance.SetMainPage(Pages)
+            NavigationService.Instance.SetMainPage(Pages.Main);
             //DataServices.Init(true);
             /*if(Settings.GetPacientSetting() == null || string.IsNullOrWhiteSpace(Settings.GetPacientSetting().Id))
             {

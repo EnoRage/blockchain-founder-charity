@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using BlockChainNET;
 
-namespace BlockChainHack.Helpers
+namespace BlockChainNET.Helpers
 {
     public class Bindable : INotifyPropertyChanged, INotifyPropertyChanging
     {

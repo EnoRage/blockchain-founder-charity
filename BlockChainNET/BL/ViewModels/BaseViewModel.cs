@@ -5,13 +5,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BlockChainHack.Helpers;
-using BlockChainHack.UI;
+using BlockChainNET.Helpers;
+using BlockChainNET.UI;
 using BlockChainNET;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 
-namespace BlockChainHack.BL.ViewModels
+namespace BlockChainNET.BL.ViewModels
 {
     public class BaseViewModel : Bindable, IDisposable
     {

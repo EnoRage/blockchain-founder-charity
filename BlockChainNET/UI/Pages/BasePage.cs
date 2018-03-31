@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BlockChainHack.BL.ViewModels;
+using BlockChainNET.BL.ViewModels;
 using Xamarin.Forms;
 
 namespace BlockChainNET.UI.Pages

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using BlockChainHack.BL.ViewModels;
-using BlockChainHack.Helpers;
+using BlockChainNET.BL.ViewModels;
+using BlockChainNET.Helpers;
 using BlockChainNET;
 using BlockChainNET.UI.Pages;
 using Xamarin.Forms;
 
-namespace BlockChainHack.UI
+namespace BlockChainNET.UI
 {
     public sealed class NavigationService
     {

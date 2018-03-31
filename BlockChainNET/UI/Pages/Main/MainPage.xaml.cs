@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using BlockChainNET.UI.Pages;
 using Xamarin.Forms;
 
-namespace BlockChainHack
+namespace BlockChainNET.UI.Pages.Main
 {
     public partial class MainPage : BasePage
-	{
-		public MainPage()
-		{
-			InitializeComponent();
-		}
-	}
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+    }
 }

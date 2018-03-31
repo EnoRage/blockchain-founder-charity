@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace BlockChainHack.Helpers
+namespace BlockChainNET.Helpers
 {
     public class MessageBus
     {

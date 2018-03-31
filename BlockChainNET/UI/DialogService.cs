@@ -1,9 +1,9 @@
 ﻿using System;
 using Acr.UserDialogs;
-using BlockChainHack.Helpers;
+using BlockChainNET.Helpers;
 using Xamarin.Forms;
 
-namespace BlockChainHack.UI
+namespace BlockChainNET.UI
 {
     public class DialogService
     {
