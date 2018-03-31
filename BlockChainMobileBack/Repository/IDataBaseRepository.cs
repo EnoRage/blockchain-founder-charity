@@ -13,5 +13,7 @@ namespace BlockChainMobileBack.Repository
         //Task<TestInt> CheckAuthorization(string snils, DateTime birthday);
         Task AddFoundationOption(FoundationOptions fo);
         Task<IEnumerable<FoundationOptions>> GetFoundations();
+        Task AddUser(string id, string pass);
+        Task<bool> CheckUserReg(string id, string pass);
     }
 }

@@ -15,6 +15,7 @@ namespace BlockChainMobileBack.Repository
             if (client != null)
                 _database = client.GetDatabase(settings.Value.Database);
         }
+        public IMongoCollection<User> UsersCollection => _database.GetCollection<User>("Users");
         public IMongoCollection<FoundationOptions> FoundationsCollection => _database.GetCollection<FoundationOptions>("Foundations");
         /*public IMongoCollection<Doctor> DoctorCollection => _database.GetCollection<Doctor>("DoctorCollection");
         public IMongoCollection<Pacient> PacientCollection => _database.GetCollection<Pacient>("PacientCollection");

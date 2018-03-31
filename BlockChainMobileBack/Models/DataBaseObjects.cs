@@ -12,6 +12,7 @@ namespace BlockChainMobileBack.Models
         [BsonIgnoreIfNull]
         [BsonId]
         public string Id { get; set; }
+
         public int Value { get; set; } = 0;
     }
 
@@ -23,15 +24,34 @@ namespace BlockChainMobileBack.Models
         [BsonId]
         public string Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
+        //gggg
+        public int FoundedDate { get; set; } = 0;
 
-        public DateTime FoundedDate { get; set; }
+        public float Capital { get; set; } = 0.0F;
 
-        public double Capital { get; set; }
+        public string Country { get; set; } = "";
 
-        public string Country { get; set; }
+        public string Mission { get; set; } = "";
+    }
 
-        public string Mission { get; set; }
+    public class User
+    {
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        [BsonId]
+        public string Id { get; set; }
+
+        public string Name { get; set; } = "";
+
+        public string Password { get; set; } = "";
+
+        public string PubKey { get; set; } = "";
+
+        public string PrvKey { get; set; } = "";
+
+        public string Adress { get; set; } = "";
     }
     /*
 name

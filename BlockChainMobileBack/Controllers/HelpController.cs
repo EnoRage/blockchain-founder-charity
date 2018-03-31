@@ -25,15 +25,19 @@ namespace BlockChainMobileBack.Controllers
         {
             if (setting == "init")
             {
+                //init FoundationCollection
                 FoundationOptions foundationOptions = new FoundationOptions()
                 {
-                    Capital = 0.0,
-                    FoundedDate = DateTime.Now,
+                    Capital = 0.0F,
+                    FoundedDate = 1945,
                     Mission = "Ne Otsosat",
                     Name = "MIREA",
                     Country = "Ukraine"
                 };
                 await _dataBaseRepository.AddFoundationOption(foundationOptions);
+
+                //init UserBD
+                await _dataBaseRepository.AddUser("Test", "Test");
             }
             return "Done";
         }
