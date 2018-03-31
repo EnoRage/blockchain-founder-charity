@@ -5,22 +5,23 @@ import (
 	"time"
 
 	"./course"
-<<<<<<< HEAD
-	"github.com/tidwall/gjson"
-=======
 	"./orglist"
->>>>>>> 6bc76a11dd3d6052192b3c11a5275fa460375f6e
+	"./waves"
+	"github.com/tidwall/gjson"
 
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 var courseJSON []byte
-var courseArray gjson.Result
-var courseInterface interface{}
+var courseResult gjson.Result
+
+var wavesBalanceResult gjson.Result
+var currencyBalanceResult gjson.Result
 
 func main() {
 	b, err := tb.NewBot(tb.Settings{
-		Token:  "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
+		// Token:  "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY",
+		Token:  "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -28,8 +29,18 @@ func main() {
 	// Получаем JSON формат курсов
 	courseJSON = course.Course("USD")
 	// Берём конкретное значение по кусам
-	courseArray = gjson.Get(string(courseJSON), "WAVES")
-	println(courseArray.String())
+	courseResult = gjson.Get(string(courseJSON), "WAVES")
+
+	// Тест Waves
+	// Получаем баланс аккаунта в WAVES
+	wavesBalanceResult = waves.GetWavesBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2")
+	// Получаем баланс аккаунта в другой валюте
+	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", "BrjUWjndUanm5VsJkbUip8VRYy6LWJePtxya3FNv4TQa")
+
+	// Тестовые логи
+	println(courseResult.String())
+	println(wavesBalanceResult.String())
+	println(currencyBalanceResult.String())
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "Сделать пожертвование"}
