@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"./course"
+	"./objects"
 	"./orglist"
 	"./waves"
 	"github.com/tidwall/gjson"
@@ -30,19 +31,33 @@ func main() {
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
+	// Тест объектов
+	// Получаем assetId конкретной валюты
+	assetId := objects.GetAssetId(objects.Bitcoin)
+	// Получаем name конкретной валюты
+	name := objects.GetName(objects.Bitcoin)
+	// Получаем ticker конкретной валюты
+	ticker := objects.GetTicker(objects.Bitcoin)
+
 	// Тест курсов
 	// Получаем JSON формат курсов
 	courseJSON = course.Course("USD")
-	// Берём конкретное значение по кусам
+	/*
+		Берём конкретное значение по кусам.
+		Доступные параметры: WAVES, BTC, ETH, ZEC, LTC, USD, EUR
+	*/
 	courseResult = gjson.Get(string(courseJSON), "WAVES")
 
 	// Тест Waves
 	// Получаем баланс аккаунта в WAVES
 	wavesBalanceResult = waves.GetWavesBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2")
 	// Получаем баланс аккаунта в другой валюте
-	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", "BrjUWjndUanm5VsJkbUip8VRYy6LWJePtxya3FNv4TQa")
+	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetId(objects.ZCash))
 
 	// Тестовые логи
+	println(assetId)
+	println(name)
+	println(ticker)
 	println(courseResult.String())
 	println(wavesBalanceResult.String())
 	println(currencyBalanceResult.String())
