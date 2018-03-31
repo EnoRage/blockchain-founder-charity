@@ -55,6 +55,9 @@ func main() {
 	// Получаем баланс аккаунта в другой валюте
 	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetId(objects.ZCash))
 
+	//Тест mongoDB
+	// mongo.InitMongo()
+
 	// Тестовые логи
 	println(assetId)
 	println(name)
