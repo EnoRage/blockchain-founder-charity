@@ -116,33 +116,48 @@ func main() {
 
 	// слушает какой фонд выбрал
 	b.Handle("/fond0", func(m *tb.Message) {
+		fond = "1"
 		b.Send(m.Sender, "0 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond1", func(m *tb.Message) {
+		fond = "2"
 		b.Send(m.Sender, "Первый фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond2", func(m *tb.Message) {
+		fond = "3"
 		b.Send(m.Sender, "2 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond3", func(m *tb.Message) {
+		fond = "4"
 		b.Send(m.Sender, "3 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond4", func(m *tb.Message) {
+		fond = "5"
 		b.Send(m.Sender, "4 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond5", func(m *tb.Message) {
+		fond = "6"
 		b.Send(m.Sender, "5 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond6", func(m *tb.Message) {
+		fond = "7"
 		b.Send(m.Sender, "6 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond7", func(m *tb.Message) {
+		fond = "8"
 		b.Send(m.Sender, "7 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond8", func(m *tb.Message) {
+		fond = "9"
 		b.Send(m.Sender, "8 фонд тут кнопочки купить и подробнее инфа", &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
-
 	// слушает какой фонд выбрал
+
+	// при нажатии кнопки пожертвовать происходит оплата
+	b.Handle(&inlineInv, func(c *tb.Callback) {
+		b.Edit(c.Message, orglist.Data9, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// при нажатии кнопки пожертвовать происходит оплата
 	b.Start()
 }
