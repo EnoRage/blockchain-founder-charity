@@ -145,7 +145,13 @@ func main() {
 	b.Handle(&replyBtn1, func(m *tb.Message) {
 		var eth = "1"
 		var ethrub = "2"
-		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)"
+		var btc = "3"
+		var btcrub = "4"
+		var ltc = "5"
+		var ltcrub = "6"
+		var waves = "7"
+		var wavesrub = "8"
+		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)" + "\n\n`BTC:` " + btc + " (" + btcrub + " RUB)" + "\n\n`LTC:` " + ltc + " (" + ltcrub + " RUB)" + "\n\n`WAVES:` " + waves + " (" + wavesrub + " RUB)"
 		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
 
