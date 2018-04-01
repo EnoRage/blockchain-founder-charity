@@ -167,11 +167,11 @@ func main() {
 		var prvtKeyETH = ethereum.CreatePrvtKey()
 		var addressETH = ethereum.GetAddress(prvtKeyETH)
 
-		println()
-		println(name)
-		println(prvtKeyETH)
-		println(addressETH)
-		println(userlogic.Auth(userID))
+		// println()
+		// println(name)
+		// println(prvtKeyETH)
+		// println(addressETH)
+		// println(userlogic.Auth(userID))
 
 		if userlogic.Auth(userID) != true {
 			userlogic.Register(userID, name, prvtKeyETH, addressETH)
