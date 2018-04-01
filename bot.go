@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strconv"
 	"time"
 
 	"./course"
@@ -9,9 +10,9 @@ import (
 	"./mongo"
 	"./objects"
 	"./orglist"
+	"./userlogic"
 	"./waves"
 	"github.com/tidwall/gjson"
-
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
@@ -159,21 +160,40 @@ func main() {
 		if !m.Private() {
 			return
 		}
+
 		// logs
-		var userID = string(m.Sender.ID)
-		// var name = string(m.Sender.Username)
+		var userID = strconv.Itoa(m.Sender.ID)
+		var name = string(m.Sender.Username)
+		var prvtKeyETH = ethereum.CreatePrvtKey()
+		var addressETH = ethereum.GetAddress(prvtKeyETH)
 
-		len := len(mongo.FindUser(userID))
-		if len != 0 {
+		println()
+		println(name)
+		println(prvtKeyETH)
+		println(addressETH)
+		println(userlogic.Auth(userID))
 
-		} else {
-			// mongo.AddUser(userID, name)
+		if userlogic.Auth(userID) != true {
+			userlogic.Register(userID, name, prvtKeyETH, addressETH)
+			var msg = "Вы зарегистрированы в системе!\n\n"
+			msg += "Ваш *Private Key:* "
+			msg += prvtKeyETH
+			msg += "\n\n"
+			msg += "Ваш *Address:* "
+			msg += addressETH
+			b.Send(m.Sender, msg, &tb.SendOptions{DisableWebPagePreview: true, ParseMode: "Markdown"})
 		}
+		// len := len(mongo.FindUser(userID))
+		// if len != 0 {
 
-		println(len)
+		// } else {
+		// 	mongo.AddUser(userID, name, prvtKeyETH, addressETH)
+		// }
 
-		println("))))")
-		println(m.Sender.ID)
+		// println(len)
+
+		// println("))))")
+		// println(m.Sender.ID)
 
 		// logs
 		var text = "*Главное меню*\n\nB *Charity* - стандарт участия в благотворительности.\n\n"

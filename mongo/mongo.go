@@ -57,7 +57,7 @@ func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("foundations")
+	c := session.DB("BlockChainDB").C("users")
 	err = c.Insert(&users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
 
 	if err != nil {
