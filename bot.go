@@ -150,6 +150,13 @@ func main() {
 	inlineBtnETH := tb.InlineButton{Unique: "ETH", Text: "📈 ETH"}
 	inlineBtnLTC := tb.InlineButton{Unique: "LTC", Text: "📈 LTC"}
 	inlineCurrency := [][]tb.InlineButton{{inlineBtnWAV, inlineBtnBTC}, {inlineBtnETH, inlineBtnLTC}}
+
+	inlineData := tb.InlineButton{Unique: "Data", Text: "🔐 Аккаунт"}
+	inlineList := tb.InlineButton{Unique: "Data", Text: "🎈 Список организаций"}
+	inlineCurrencys := [][]tb.InlineButton{
+		{inlineData, inlineList},
+	}
+
 	course.Course("USD")
 
 	if err != nil {
@@ -219,10 +226,46 @@ func main() {
 		var torub3 = (1.0 / (gjson.Get(string(torub), "ETH").Float())) * ethreal
 		var ethrub = strconv.FormatFloat(torub3, 'g', 1, 64)
 		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + thefuckingrealeth + " (" + ethrub + " RUB)"
-		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineCurrencys})
 	})
 
 	// тут переход в список фондов с пожертвованиями
+
+	// Чекаем в кабинете листы и другое
+	b.Handle(&inlineData, func(c *tb.Callback) {
+		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		var address = (user[0].EthAddress)
+		var key = (user[0].EthPrvKey)
+		var msg = "Мой *адрес* ETH: " + address + "\n\nМой *Private key*" + key
+		b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineList, func(c *tb.Callback) {
+		// user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		var msg = ""
+		var OrgList = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
+
+		len := len(OrgList)
+		//
+		println("))))))000000000")
+		println(OrgList)
+		println(len)
+		//
+		if len == 0 {
+			msg += "Вы еще не пожертвовали в какую-лбо организацию, вы можете сделать это сейчас"
+			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		}
+		msg += "Список организаций, в которые вы пожертвовали: "
+
+		var all = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
+		println(all)
+
+		msg += "Все имена организаций + сумма инвестиций"
+
+		b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	// Чекаем в кабинете листы и другое
 
 	// inline buttons 1-9 Инфа о фондах
 

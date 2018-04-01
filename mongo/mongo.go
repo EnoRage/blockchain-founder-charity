@@ -115,3 +115,20 @@ func FindUser(userid string) []users {
 
 	return results
 }
+
+// FindUserFoundations Поиск всех фондов юзера
+func FindUserFoundations(userid string) []foundations {
+	session, err := ConnectToMongo()
+	defer CloseMongoConnection(session)
+
+	c := session.DB("BlockChainDB").C("foundations")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var results []foundations
+	c.Find(bson.M{"UserID": userid}).All(&results)
+
+	return results
+}
