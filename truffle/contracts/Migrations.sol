@@ -1,4 +1,4 @@
-pragma solidity^0.4.18;
+pragma solidity ^0.4.18;
 
 
 contract GetMoney {
@@ -35,7 +35,7 @@ contract GetMoney {
         }
     }
     
-    function showVotres() public allow constant returns(int) {
+    function showVotres() public  payable allow  returns(int) {
         return votres[msg.sender];
     }
     
