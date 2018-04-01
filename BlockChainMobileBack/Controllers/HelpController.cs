@@ -34,10 +34,10 @@ namespace BlockChainMobileBack.Controllers
                     Name = "MIREA",
                     Country = "Ukraine"
                 };
-                await _dataBaseRepository.AddFoundationOption(foundationOptions);
+                //await _dataBaseRepository.AddFoundationOption(foundationOptions);
 
                 //init UserBD
-                await _dataBaseRepository.AddUser("Test", "Test");
+                await _dataBaseRepository.AddUser("@maxspT");
 
                 //init transaction
 

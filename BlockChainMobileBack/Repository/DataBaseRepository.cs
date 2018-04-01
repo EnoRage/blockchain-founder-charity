@@ -22,20 +22,29 @@ namespace BlockChainMobileBack.Repository
             await _context.FoundationsCollection.InsertOneAsync(fo);
         }
 
-        public async Task AddUser(string id, string pass)
+        public async Task AddUser(string id)
         {
             await _context.UsersCollection.InsertOneAsync(new User()
             {
                 Name = id,
-                Password = pass
+                EthAddress = "0xB581A19c5437241857276E5971931FeE6f6490aB",
+                EthPrvKey = "0x830f7736c81ecb13dfc8ffdfddc103381dadfc06e6d0c2453b06c429a116f3e6",
+                Foundations = new List<Tuple<string, string, string, string>>(){
+                    new Tuple<string, string, string, string>("Ford Foundation","ETH","0.34","1267"),
+                    new Tuple<string, string, string, string>("Linux Foundation","ETH","2","4234")
+                }
             });
         }
 
-        public async Task<bool> CheckUserReg(string id, string pass)
+        public async Task<User> GetUser (string id)
         {
-            var andFilter = Builders<User>.Filter.And(
-                Builders<User>.Filter.Eq("Name", id),
-                Builders<User>.Filter.Eq("Password", pass));
+            var andFilter = Builders<User>.Filter.Eq("Name", id);
+            return await _context.UsersCollection.Find(andFilter).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CheckUserReg(string id)
+        {
+            var andFilter = Builders<User>.Filter.Eq("Name", id);
 
             return (await _context.UsersCollection.Find(andFilter).ToListAsync())
                     .FirstOrDefault() != null;

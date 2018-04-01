@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlockChainMobileBack.Models;
 using BlockChainMobileBack.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,19 +18,23 @@ namespace BlockChainMobileBack.Controllers
         {
             _rep = dataBaseRepository;
         }
-        // GET: api/values
 
-        // GET api/values/5
-        [HttpGet("{log}/{pass}")]
-        public async Task<bool> CheckReg(string log, string pass)
+        [HttpGet("{log}")]
+        public async Task<bool> CheckReg(string log)
         {
-           return await _rep.CheckUserReg(log, pass);
+           return await _rep.CheckUserReg(log);
+        }
+
+        [HttpGet("{log}/{inf}")]
+        public async Task<User> CheckReg(string log, string inf)
+        {
+            return await _rep.GetUser(log);
         }
 
         [HttpPost("{log}/{pass}")]
-        public async Task<string> AddUser(string log, string pass)
+        public async Task<string> AddUser(string log)
         {
-            await _rep.AddUser(log, pass);
+            await _rep.AddUser(log);
             return "User has been added";
         }
     }

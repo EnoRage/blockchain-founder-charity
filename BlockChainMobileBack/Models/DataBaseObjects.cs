@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -44,14 +45,13 @@ namespace BlockChainMobileBack.Models
         public string Id { get; set; }
 
         public string Name { get; set; } = "";
+            
+        public string EthPrvKey { get; set; } = "";
 
-        public string Password { get; set; } = "";
+        public string EthAddress { get; set; } = "";
 
-        public string PubKey { get; set; } = "";
-
-        public string PrvKey { get; set; } = "";
-
-        public string Adress { get; set; } = "";
+        public List<Tuple<string, string, string, string>> Foundations { get; set; } 
+            = new List<Tuple<string, string, string, string>>();
     }
 
     public class TransactionHistory
