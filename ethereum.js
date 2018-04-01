@@ -64,8 +64,12 @@ function sendTx(_prvtKey, _sender, _receiver, _amount) {
                                 if (tx.error) {
                                     console.log('Транзакция не произведена');
                                     console.log(tx)
+                                    return "400"
+
+
                                 } else {
                                     console.log(tx);
+                                    return "200"
                                 }
                             })
                             .catch((err) => {

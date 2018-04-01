@@ -41,8 +41,8 @@ app.post('/getBalance', (req, res) => {
 app.post('/sendTx', (req, res) => {
     var data = req.body;
     console.log(data);
-    Ethereum.sendTx(data.prvtKey, data.sender, data.receiver, data.amount);
-    res.send('200');
+    var status = Ethereum.sendTx(data.prvtKey, data.sender, data.receiver, data.amount);
+    res.send(status);
 });
 
 // Создаём секретный ключ биткоина
