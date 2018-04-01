@@ -1,7 +1,6 @@
 package mongo
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 
@@ -97,15 +96,11 @@ func AddFoundationToUser(userID string, foundationName string, currency string, 
 	println(string(counter))
 
 	arr1 := results.Foundations
-	// var arr2 [][]string
+
 	arr3 := []string{foundationName, currency, strconv.FormatFloat(investInCurrency, 'g', 8, 64), strconv.FormatFloat(investSumRub, 'g', 8, 64)}
-	// copy(arr2, arr1)
+
 	arr2 := append(arr1, arr3)
-	// arr2[counter] = arr3
-	// fmt.Println(arr2)
-	fmt.Println(arr2)
-	// arr2[counter][1] =
-	// arr2[counter][2] =
+
 	err = c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"Foundations": arr2}})
 
 	if err != nil {
@@ -159,23 +154,6 @@ func FindUser(userid string) []users {
 	}
 
 	var results []users
-	c.Find(bson.M{"UserID": userid}).All(&results)
-
-	return results
-}
-
-// FindUserFoundations Поиск всех фондов юзера
-func FindUserFoundations(userid string) []foundations {
-	session, err := ConnectToMongo()
-	defer CloseMongoConnection(session)
-
-	c := session.DB("BlockChainDB").C("foundations")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var results []foundations
 	c.Find(bson.M{"UserID": userid}).All(&results)
 
 	return results

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"time"
@@ -76,6 +77,7 @@ func main() {
 	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
 	// Поиск по фондам
 	foundationCollection := mongo.FindAllFoundations()
+
 	// mongo.AddFoundationToUser("302115726", "Имя", 1.002, 2000.00)
 	// Тестовые логи
 	println(assetID)
@@ -275,24 +277,24 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineList, func(c *tb.Callback) {
-		// user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		// user := mongo.FindUser()
 		var msg = ""
-		var OrgList = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
-
-		len := len(OrgList)
+		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		fmt.Println(user[0].Foundations)
+		len := len(user[0].Foundations)
 		//
-		println("))))))000000000")
-		println(OrgList)
-		println(len)
+
 		//
 		if len == 0 {
 			msg += "Вы еще не пожертвовали в какую-лбо организацию, вы можете сделать это сейчас"
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		} else {
-			msg += "Список организаций, в которые вы пожертвовали: "
-			var all = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
-			println(all)
-			msg += "Все имена организаций + сумма инвестиций"
+			msg += "Список организаций, в которые вы пожертвовали: \n"
+			for index := range user[0].Foundations {
+				msg += user[0].Foundations[index][0] + ". Сумма пожертвования " + user[0].Foundations[index][2] + ".\n"
+				// fmt.Println("Название: " + user[0].Foundations[index][0])
+			}
+
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
 		}
 
@@ -302,6 +304,9 @@ func main() {
 	b.Handle(&inlineVote, func(c *tb.Callback) {
 		var chosenorg = ""
 		var msg = "Организация: "
+		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		msg += user[0].Foundations[0][0]
+
 		msg += chosenorg
 		msg += " собирается вывести 0.4 ETH на покупку новой версии Windows сотруднику"
 		msg += "\n\nКак вы относитесь к этому решению?"
@@ -478,6 +483,17 @@ func main() {
 	})
 	b.Handle(&inlineklavapply, func(c *tb.Callback) {
 		var userid = strconv.Itoa(c.Sender.ID)
+
+		var torub = course.Course("RUB")
+		var torub2, err = strconv.ParseFloat(sum, 64)
+		if err != nil {
+			println(err)
+		}
+		torub3 := (1.0 / (gjson.Get(string(torub), "ETH").Float())) * torub2
+
+		var ethrub = strconv.FormatFloat(torub3, 'g', 8, 64)
+		println(ethrub)
+
 		sum1, err := strconv.ParseFloat(sum, 64)
 		if err != nil {
 			println(err)
@@ -487,7 +503,7 @@ func main() {
 			println(err)
 		}
 
-		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + rubsum + "* `RUB`"
+		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
 		mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
 		b.Respond(c, &tb.CallbackResponse{})
