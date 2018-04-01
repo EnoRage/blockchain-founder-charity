@@ -82,3 +82,37 @@ func FindAllFoundations() []foundations {
 
 	return results
 }
+
+// FindAllUsers Поиск всех users
+func FindAllUsers() []users {
+	session, err := ConnectToMongo()
+	defer CloseMongoConnection(session)
+
+	c := session.DB("BlockChainDB").C("users")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var results []users
+	c.Find(bson.M{}).All(&results)
+
+	return results
+}
+
+// FindAllUsers Поиск всех users
+func FindUser(userid string) []users {
+	session, err := ConnectToMongo()
+	defer CloseMongoConnection(session)
+
+	c := session.DB("BlockChainDB").C("users")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var results []users
+	c.Find(bson.M{"UserID": userid}).All(&results)
+
+	return results
+}

@@ -159,9 +159,23 @@ func main() {
 		if !m.Private() {
 			return
 		}
+		// logs
+		var userID = string(m.Sender.ID)
+		// var name = string(m.Sender.Username)
+
+		len := len(mongo.FindUser(userID))
+		if len != 0 {
+
+		} else {
+			// mongo.AddUser(userID, name)
+		}
+
+		println(len)
 
 		println("))))")
 		println(m.Sender.ID)
+
+		// logs
 		var text = "*Главное меню*\n\nB *Charity* - стандарт участия в благотворительности.\n\n"
 		text += "*1.* Выбираешь благотворительную организацию\n"
 		text += "*2.* Инвестируешь в конкретный  реальный проект\n"
