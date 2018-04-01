@@ -156,7 +156,7 @@ func main() {
 	inlineCurrency := [][]tb.InlineButton{{inlineBtnWAV, inlineBtnBTC}, {inlineBtnETH, inlineBtnLTC}}
 
 	inlineData := tb.InlineButton{Unique: "Data", Text: "🔐 Аккаунт"}
-	inlineList := tb.InlineButton{Unique: "Data", Text: "🎈 Список организаций"}
+	inlineList := tb.InlineButton{Unique: "List", Text: "🎈 Список организаций"}
 	inlineCurrencys := [][]tb.InlineButton{
 		{inlineData, inlineList},
 	}
@@ -266,8 +266,8 @@ func main() {
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
 		var address = (user[0].EthAddress)
 		var key = (user[0].EthPrvKey)
-		var msg = "Мой *адрес* ETH: " + address + "\n\nМой *Private key*" + key
-		b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		var msg1 = "Мой *адрес* ETH: " + address + "\n\nМой *Private key*" + key
+		b.Send(c.Sender, msg1, &tb.SendOptions{ParseMode: "Markdown"})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineList, func(c *tb.Callback) {
