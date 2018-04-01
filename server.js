@@ -2,6 +2,7 @@ const express = require('express'),
     url = require("url"),
     bodyParser = require('body-parser'),
     Ethereum = require('./ethereum.js'),
+    Bitcoin = require('./bitcoin.js'),
     db = require('./db.js');
 
 
@@ -18,7 +19,7 @@ app.post('/createEthAccount', (req, res) => {
     res.send(account);
 });
 
-// Получаем адрес из секретного ключа
+// Получаем адрес из секретного ключа эфира
 app.post('/getAddress', (req, res) => {
     var data = req.body;
     console.log(data)
@@ -36,11 +37,35 @@ app.post('/getBalance', (req, res) => {
     });
 });
 
-// Отправляем транзакцию в блокчейн
+// Отправляем транзакцию в блокчейн эфира
 app.post('/sendTx', (req, res) => {
     var data = req.body;
     console.log(data);
     Ethereum.sendTx(data.prvtKey, data.sender, data.receiver, data.amount);
+    res.send('200');
+});
+
+// Создаём секретный ключ биткоина
+app.post('/createBtcAccount', (req, res) => {
+    var data = req.body;
+    console.log(data);
+    var prvtKey = Bitcoin.createNewAccount();
+    res.send(prvtKey);
+});
+
+// Получаем адрес из секретного ключа биткоина
+app.post('/getBtcAddress', (req, res) => {
+    var data = req.body;
+    console.log(data)
+    var address = Bitcoin.getAddress(data.prvtKey);
+    res.send(address);
+});
+
+// Отправляем транзакцию в блокчейн биткоина
+app.post('/sendBtcTx', (req, res) => {
+    var data = req.body;
+    console.log(data);
+    Bitcoin.sendTx(data.prvtKey, data.sender, data.receiver, data.amount);
     res.send('200');
 });
 
