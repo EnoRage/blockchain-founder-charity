@@ -18,7 +18,6 @@ type foundations struct {
 type users struct {
 	UserID     string `bson:"UserID"`
 	Name       string `bson:"Name"`
-	EthPubKey  string `bson:"EthPubKey"`
 	EthPrvKey  string `bson:"EthPrvKey"`
 	EthAddress string `bson:"EthAddress"`
 }
@@ -54,12 +53,12 @@ func AddFoundation(name string, foundedDate int32, capital float32, country stri
 }
 
 // AddUser Добавление пользователя
-func AddUser(userID string, name string, ethPubKey string, ethPrvKey string, ethAddress string) {
+func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("foundations")
-	err = c.Insert(&users{UserID: userID, Name: name, EthPubKey: ethPubKey, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
+	err = c.Insert(&users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
 
 	if err != nil {
 		log.Fatal(err)
