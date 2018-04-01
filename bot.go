@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math"
 	"strconv"
 	"time"
 
@@ -204,10 +205,19 @@ func main() {
 		b.Send(m.Sender, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
 	b.Handle(&replyBtn1, func(m *tb.Message) {
-		var eth = "1"
-		var ethrub = "2"
-		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + eth + " (" + ethrub + " RUB)"
-		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		user := mongo.FindUser(strconv.Itoa(m.Sender.ID))
+		var eth = ethereum.GetBalance(user[0].EthAddress)
+		ethufufuuufuuf, err := strconv.ParseFloat(eth, 64)
+		if err != nil {
+			println(eth)
+		}
+		var ethreal = ethufufuuufuuf * math.Pow(10, -18)
+		var thefuckingrealeth = strconv.FormatFloat(ethreal, 'g', 1, 64)
+		var torub = course.Course("RUB")
+		var torub3 = (1.0 / (gjson.Get(string(torub), "ETH").Float())) * ethreal
+		var ethrub = strconv.FormatFloat(torub3, 'g', 1, 64)
+		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + thefuckingrealeth + " (" + ethrub + " RUB)"
+		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
 	})
 
 	// тут переход в список фондов с пожертвованиями
