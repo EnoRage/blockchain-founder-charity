@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"math"
 	"strconv"
 	"time"
 
@@ -32,8 +31,8 @@ var currencyBalanceResult gjson.Result
 func main() {
 	b, err := tb.NewBot(tb.Settings{
 		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY", //продакшн @bf_charity_bot
-		Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
-		// Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
+		// Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
+		Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -245,16 +244,18 @@ func main() {
 		user := mongo.FindUser(strconv.Itoa(m.Sender.ID))
 		var eth = ethereum.GetBalance(user[0].EthAddress)
 		//0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a
-		println(ethereum.GetBalance("0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a"))
+		println("Баланс в Ethereum: " + eth)
 		ethufufuuufuuf, err := strconv.ParseFloat(eth, 64)
 		if err != nil {
 			println(eth)
 		}
-		var ethreal = ethufufuuufuuf * math.Pow(10, -18)
-		var thefuckingrealeth = strconv.FormatFloat(ethreal, 'g', 1, 64)
+		var ethreal = ethufufuuufuuf
+		println("Преобразованный в Float: " + strconv.FormatFloat(ethreal, 'g', 8, 64))
+		var thefuckingrealeth = strconv.FormatFloat(ethreal, 'g', 8, 64)
 		var torub = course.Course("RUB")
+		println("1 ETH: " + strconv.FormatFloat(1.0/(gjson.Get(string(torub), "ETH").Float())*ethreal, 'g', 8, 64))
 		var torub3 = (1.0 / (gjson.Get(string(torub), "ETH").Float())) * ethreal
-		var ethrub = strconv.FormatFloat(torub3, 'g', 1, 64)
+		var ethrub = strconv.FormatFloat(torub3, 'g', 8, 64)
 		var msg = "*Личный кабинет* \n\n*Баланс по валютам:*" + "\n\n`ETH:` " + thefuckingrealeth + " (" + ethrub + " RUB)"
 		b.Send(m.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineCurrencys})
 	})
