@@ -1,7 +1,6 @@
 package mongo
 
 import (
-	"fmt"
 	"log"
 
 	"gopkg.in/mgo.v2"
@@ -68,22 +67,18 @@ func AddUser(userID string, name string, ethPubKey string, ethPrvKey string, eth
 }
 
 // FindAllFoundations Поиск всех фондов
-func FindAllFoundations() {
+func FindAllFoundations() []foundations {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("Foundations")
+	c := session.DB("BlockChainDB").C("foundations")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	item := foundations{}
+	var results []foundations
+	c.Find(bson.M{}).All(&results)
 
-	find := c.Find(bson.M{})
-
-	items := find.Iter()
-	for items.Next(&item) {
-		fmt.Println(item)
-	}
+	return results
 }

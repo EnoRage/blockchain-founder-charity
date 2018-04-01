@@ -6,6 +6,7 @@ import (
 
 	"./course"
 	"./ethereum"
+	"./mongo"
 	"./objects"
 	"./orglist"
 	"./waves"
@@ -73,7 +74,7 @@ func main() {
 	// Добавление фонда
 	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
 	// Поиск по фондам
-	// mongo.FindAllFoundations()
+	foundationCollection := mongo.FindAllFoundations()
 
 	// Тестовые логи
 	println(assetID)
@@ -87,6 +88,11 @@ func main() {
 	println(address)
 	println(balance)
 	// println(status)
+
+	// Поиск всех имён из коллекции foundations
+	for k := range foundationCollection {
+		println(foundationCollection[k].Name)
+	}
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}
