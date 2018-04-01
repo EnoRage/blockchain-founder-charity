@@ -45,7 +45,7 @@ function sendTx(_prvtKey, _sender, _receiver, _amount) {
                         console.log(txCount)
                         tx.nonce = Number(txCount.result);
                         tx.gasPrice = Number(res.result);
-                        tx.gasLimit = 40000;
+                        tx.gasLimit = 400000;
                         tx.value = Number(_amount);
                         tx.from = String(_sender);
                         tx.to = String(_receiver);
