@@ -266,7 +266,7 @@ func main() {
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
 		var address = (user[0].EthAddress)
 		var key = (user[0].EthPrvKey)
-		var msg1 = "Мой *адрес* ETH: " + address + "\n\nМой *Private key*" + key
+		var msg1 = "Мой *адрес* ETH: " + address + "\n\nМой *Private key* " + key
 		b.Send(c.Sender, msg1, &tb.SendOptions{ParseMode: "Markdown"})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
