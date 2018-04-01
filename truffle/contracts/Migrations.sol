@@ -18,13 +18,13 @@ contract GetMoney {
         _;
     }
 
-    function () payable {
+    function () public payable {
         updateTotalbalance();
-        investorsbal[msg.sender] = msg.value;
+        investorsbal[msg.sender] += msg.value;
     }
     
-    function investPart(address _sender) constant returns(uint) {
-        return investorsbal[_sender];
+    function investPart() public allow payable returns(uint) {
+        return investorsbal[msg.sender];
     }
     
     function vote(int res) public allow {
