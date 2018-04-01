@@ -1,0 +1,31 @@
+{
+  "name": "blockchain-founder-charity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "encodings": "^1.0.0",
+    "ethereumjs-tx": "^1.3.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.12",
+    "request-promise": "^4.2.2",
+    "url": "^0.11.0",
+    "web3-eth-accounts": "^1.0.0-beta.33"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnoRage/blockchain-founder-charity.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EnoRage/blockchain-founder-charity/issues"
+  },
+  "homepage": "https://github.com/EnoRage/blockchain-founder-charity#readme"
+}
