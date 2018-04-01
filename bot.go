@@ -159,7 +159,9 @@ func main() {
 		if !m.Private() {
 			return
 		}
-		log.Println(m.Sender)
+
+		println("))))")
+		println(m.Sender.ID)
 		var text = "*Главное меню*\n\nB *Charity* - стандарт участия в благотворительности.\n\n"
 		text += "*1.* Выбираешь благотворительную организацию\n"
 		text += "*2.* Инвестируешь в конкретный  реальный проект\n"
