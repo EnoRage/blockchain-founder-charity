@@ -17,5 +17,9 @@
         <Button
             Text="Мои пожертвования">
         </Button>
+        <Button
+            Text="Выйти"
+            Command="{Binding ExitCommand}">
+        </Button>
     </StackLayout>
 </pages:BasePage>

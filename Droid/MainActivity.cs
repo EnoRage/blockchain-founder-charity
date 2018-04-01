@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using BlockChainNET;
+using Acr.UserDialogs;
 
 namespace BlockChainHack.Droid
 {
@@ -21,6 +22,7 @@ namespace BlockChainHack.Droid
 
             base.OnCreate(bundle);
 
+            UserDialogs.Init(this);
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             LoadApplication(new App());

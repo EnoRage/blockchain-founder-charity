@@ -15,7 +15,8 @@
                 Placeholder="@mynick">
             </Entry>
             <Button
-                Text="Войти">
+                Text="Войти"
+                Command="{Binding GoToInfoCommand}">
             </Button>
         </StackLayout>
     </ContentPage.Content>
