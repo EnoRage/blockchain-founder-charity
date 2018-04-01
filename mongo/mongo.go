@@ -73,7 +73,7 @@ func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 
 // AddFoundationToUser Добавление благотворительной организации в БД
 
-func AddFoundationToUser(userID string, foundationName string, investInCurrency float64, investSumRub float64) {
+func AddFoundationToUser(userID string, foundationName string, currency string, investInCurrency float64, investSumRub float64) {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
@@ -98,7 +98,7 @@ func AddFoundationToUser(userID string, foundationName string, investInCurrency 
 
 	arr1 := results.Foundations
 	// var arr2 [][]string
-	arr3 := []string{foundationName, strconv.FormatFloat(investInCurrency, 'g', 8, 64), strconv.FormatFloat(investSumRub, 'g', 8, 64)}
+	arr3 := []string{foundationName, currency, strconv.FormatFloat(investInCurrency, 'g', 8, 64), strconv.FormatFloat(investSumRub, 'g', 8, 64)}
 	// copy(arr2, arr1)
 	arr2 := append(arr1, arr3)
 	// arr2[counter] = arr3

@@ -123,7 +123,7 @@ func main() {
 	inlineYes := tb.InlineButton{Unique: "yes", Text: "✅ Да, я за"}
 	inlineNo := tb.InlineButton{Unique: "no", Text: "❌ Нет, я против"}
 	inlineKbrdyesno := [][]tb.InlineButton{
-		{inlineYes, inlineNo},}
+		{inlineYes, inlineNo}}
 	// NT
 	inlineklav0 := tb.InlineButton{Unique: "klav0", Text: "0️⃣"}
 	inlineklav1 := tb.InlineButton{Unique: "klav1", Text: "1️⃣"}
@@ -160,7 +160,7 @@ func main() {
 	inlineVote := tb.InlineButton{Unique: "curvote", Text: "〽️ Текущие голосования"}
 
 	inlineCurrencys := [][]tb.InlineButton{
-		{inlineData},  {inlineList},{inlineVote},
+		{inlineData}, {inlineList}, {inlineVote},
 	}
 
 	course.Course("USD")
@@ -181,7 +181,7 @@ func main() {
 		// msgorg += " хочет потратить "
 		// msgorg += orgsum + " на "
 		// msgorg += orgmsg
-		// msgorg 
+		// msgorg
 		// inlineKbrdCalc вот это меню
 
 		// b.Handle(&inlineYes, func(c *tb.Callback) {
@@ -299,8 +299,6 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
-	
-
 	b.Handle(&inlineVote, func(c *tb.Callback) {
 		var chosenorg = ""
 		var msg = "Организация: "
@@ -312,14 +310,14 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineYes, func(c *tb.Callback) {
-			var msg = "Вы проголосовали За, ваш голос учтен!"
-			b.Edit(c.Message,msg, &tb.SendOptions{ParseMode: "Markdown"})
-			b.Respond(c, &tb.CallbackResponse{})
-		})
+		var msg = "Вы проголосовали За, ваш голос учтен!"
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
 	b.Handle(&inlineNo, func(c *tb.Callback) {
-			var msg = "Вы проголосовали Против, ваш голос учтен!"
-			b.Edit(c.Message,msg, &tb.SendOptions{ParseMode: "Markdown"})
-			b.Respond(c, &tb.CallbackResponse{})
+		var msg = "Вы проголосовали Против, ваш голос учтен!"
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
+		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// Чекаем в кабинете листы и другое
 
@@ -479,7 +477,18 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklavapply, func(c *tb.Callback) {
+		var userid = strconv.Itoa(c.Sender.ID)
+		sum1, err := strconv.ParseFloat(sum, 64)
+		if err != nil {
+			println(err)
+		}
+		sum2, err := strconv.ParseFloat(rubsum, 64)
+		if err != nil {
+			println(err)
+		}
+
 		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + rubsum + "* `RUB`"
+		mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
 		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
