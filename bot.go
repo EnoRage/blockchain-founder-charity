@@ -509,8 +509,8 @@ func main() {
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
 		var prvtKey = user[0].EthPrvKey
 		var address = user[0].EthAddress
-		status := ethereum.SendTransaction(prvtKey, address, "0xD2fF58c7498f848402149bFD0d37Ff98d3548a35", sumString)
-
+		// status := ethereum.SendTransaction(prvtKey, address, "0xD2fF58c7498f848402149bFD0d37Ff98d3548a35", sumString)
+		status := ethereum.SendTransaction(prvtKey, address, "0x6c1773936cbae3c0b7814e118b10b84a272a3bd4", sumString)
 		if status != "400" {
 			var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
 			mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
