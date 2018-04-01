@@ -6,7 +6,7 @@ const Accounts = require('web3-eth-accounts'),
 var accounts = new Accounts('ws://localhost:8546');
 
 const apiKeyToken = 'KF2VV1A88HNTQMKFBD3VYBD59SVKR5Z1QA';
-const Network = 'api-ropsten'
+const Network = 'api-rinkeby'
 
 function createNewAccount() {
     let randomPrvtKey = accounts.create().privateKey;
@@ -45,7 +45,7 @@ function sendTx(_prvtKey, _sender, _receiver, _amount) {
                         console.log(txCount)
                         tx.nonce = Number(txCount.result);
                         tx.gasPrice = Number(res.result);
-                        tx.gasLimit = 4000000;
+                        tx.gasLimit = 40000;
                         tx.value = Number(_amount);
                         tx.from = String(_sender);
                         tx.to = String(_receiver);
