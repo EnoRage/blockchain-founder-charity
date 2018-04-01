@@ -160,19 +160,16 @@ func main() {
 		if !m.Private() {
 			return
 		}
-
 		// logs
 		var userID = strconv.Itoa(m.Sender.ID)
 		var name = string(m.Sender.Username)
 		var prvtKeyETH = ethereum.CreatePrvtKey()
 		var addressETH = ethereum.GetAddress(prvtKeyETH)
-
 		// println()
 		// println(name)
 		// println(prvtKeyETH)
 		// println(addressETH)
 		// println(userlogic.Auth(userID))
-
 		if userlogic.Auth(userID) != true {
 			userlogic.Register(userID, name, prvtKeyETH, addressETH)
 			var msg = "Вы зарегистрированы в системе!\n\n"
@@ -185,16 +182,12 @@ func main() {
 		}
 		// len := len(mongo.FindUser(userID))
 		// if len != 0 {
-
 		// } else {
 		// 	mongo.AddUser(userID, name, prvtKeyETH, addressETH)
 		// }
-
 		// println(len)
-
 		// println("))))")
 		// println(m.Sender.ID)
-
 		// logs
 		var text = "*Главное меню*\n\nB *Charity* - стандарт участия в благотворительности.\n\n"
 		text += "*1.* Выбираешь благотворительную организацию\n"
