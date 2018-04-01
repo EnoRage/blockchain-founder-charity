@@ -76,7 +76,7 @@ func main() {
 	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
 	// Поиск по фондам
 	foundationCollection := mongo.FindAllFoundations()
-
+	// mongo.AddFoundationToUser("302115726", "Имя", 1.002, 2000.00)
 	// Тестовые логи
 	println(assetID)
 	println(name)
