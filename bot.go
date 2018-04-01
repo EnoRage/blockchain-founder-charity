@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"strconv"
 	"time"
 
@@ -503,10 +504,24 @@ func main() {
 			println(err)
 		}
 
-		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
-		mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
-		b.Respond(c, &tb.CallbackResponse{})
+		var sum23 = sum1 * math.Pow(10, 18)
+		var sumString = strconv.FormatFloat(sum23, 'g', 18, 64)
+		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		var prvtKey = user[0].EthPrvKey
+		var address = user[0].EthAddress
+		status := ethereum.SendTransaction(prvtKey, address, "0xD2fF58c7498f848402149bFD0d37Ff98d3548a35", sumString)
+
+		if status != "400" {
+			var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
+			mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
+			b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
+			b.Respond(c, &tb.CallbackResponse{})
+		} else {
+			var text = "Недостаточно средств на балансе"
+			b.Send(c.Sender, text, &tb.SendOptions{DisableWebPagePreview: true, ParseMode: "Markdown"}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+			b.Respond(c, &tb.CallbackResponse{})
+		}
+
 	})
 	b.Handle(&inlineklavback, func(c *tb.Callback) {
 		sum = ""
