@@ -31,8 +31,8 @@ var currencyBalanceResult gjson.Result
 func main() {
 	b, err := tb.NewBot(tb.Settings{
 		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY", //продакшн @bf_charity_bot
-		// Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
-		Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
+		Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
+		// Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 
@@ -120,9 +120,10 @@ func main() {
 		{inlineInv},
 	}
 	// NT
-	// inlineYes := tb.InlineButton{Unique: "yes", Text: "✅ Да, я за"}
-	// inlineNo := tb.InlineButton{Unique: "no", Text: "❌ Нет, я против"}
-	// inlineKbrdCalc := [][]tb.InlineButton{{inlineYes, inlineNo}}
+	inlineYes := tb.InlineButton{Unique: "yes", Text: "✅ Да, я за"}
+	inlineNo := tb.InlineButton{Unique: "no", Text: "❌ Нет, я против"}
+	inlineKbrdyesno := [][]tb.InlineButton{
+		{inlineYes, inlineNo},}
 	// NT
 	inlineklav0 := tb.InlineButton{Unique: "klav0", Text: "0️⃣"}
 	inlineklav1 := tb.InlineButton{Unique: "klav1", Text: "1️⃣"}
@@ -148,16 +149,18 @@ func main() {
 	inlinуvapply := tb.InlineButton{Unique: "apply", Text: "✅ Подтвердить"}
 	inlineKbrdaply := [][]tb.InlineButton{{inlinуvapply}}
 
-	inlineBtnWAV := tb.InlineButton{Unique: "WAVES", Text: "📈 WAVES"}
-	inlineBtnBTC := tb.InlineButton{Unique: "BTC", Text: "📈 BTC"}
+	// inlineBtnWAV := tb.InlineButton{Unique: "WAVES", Text: "📈 WAVES"}
+	// inlineBtnBTC := tb.InlineButton{Unique: "BTC", Text: "📈 BTC"}
 	inlineBtnETH := tb.InlineButton{Unique: "ETH", Text: "📈 ETH"}
-	inlineBtnLTC := tb.InlineButton{Unique: "LTC", Text: "📈 LTC"}
-	inlineCurrency := [][]tb.InlineButton{{inlineBtnWAV, inlineBtnBTC}, {inlineBtnETH, inlineBtnLTC}}
+	// inlineBtnLTC := tb.InlineButton{Unique: "LTC", Text: "📈 LTC"}
+	inlineCurrency := [][]tb.InlineButton{{inlineBtnETH}}
 
 	inlineData := tb.InlineButton{Unique: "Data", Text: "🔐 Аккаунт"}
 	inlineList := tb.InlineButton{Unique: "List", Text: "🎈 Список организаций"}
+	inlineVote := tb.InlineButton{Unique: "curvote", Text: "〽️ Текущие голосования"}
+
 	inlineCurrencys := [][]tb.InlineButton{
-		{inlineData, inlineList},
+		{inlineData},  {inlineList},{inlineVote},
 	}
 
 	course.Course("USD")
@@ -178,7 +181,7 @@ func main() {
 		// msgorg += " хочет потратить "
 		// msgorg += orgsum + " на "
 		// msgorg += orgmsg
-		// msgorg += "\n\nКак вы относитесь к этому решению?"
+		// msgorg 
 		// inlineKbrdCalc вот это меню
 
 		// b.Handle(&inlineYes, func(c *tb.Callback) {
@@ -294,6 +297,29 @@ func main() {
 		}
 
 		b.Respond(c, &tb.CallbackResponse{})
+	})
+
+	
+
+	b.Handle(&inlineVote, func(c *tb.Callback) {
+		var chosenorg = ""
+		var msg = "Организация: "
+		msg += chosenorg
+		msg += " собирается вывести 0.4 ETH на покупку новой версии Windows сотруднику"
+		msg += "\n\nКак вы относитесь к этому решению?"
+
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdyesno})
+		b.Respond(c, &tb.CallbackResponse{})
+	})
+	b.Handle(&inlineYes, func(c *tb.Callback) {
+			var msg = "Вы проголосовали За, ваш голос учтен!"
+			b.Edit(c.Message,msg, &tb.SendOptions{ParseMode: "Markdown"})
+			b.Respond(c, &tb.CallbackResponse{})
+		})
+	b.Handle(&inlineNo, func(c *tb.Callback) {
+			var msg = "Вы проголосовали Против, ваш голос учтен!"
+			b.Edit(c.Message,msg, &tb.SendOptions{ParseMode: "Markdown"})
+			b.Respond(c, &tb.CallbackResponse{})
 	})
 	// Чекаем в кабинете листы и другое
 
@@ -474,19 +500,19 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
-	b.Handle(&inlineBtnWAV, func(c *tb.Callback) {
-		concurrency = "Waves"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
+	// b.Handle(&inlineBtnWAV, func(c *tb.Callback) {
+	// 	concurrency = "Waves"
+	// 	var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
+	// 	b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
 
-	b.Handle(&inlineBtnBTC, func(c *tb.Callback) {
-		concurrency = "Bitcoin"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
+	// b.Handle(&inlineBtnBTC, func(c *tb.Callback) {
+	// 	concurrency = "Bitcoin"
+	// 	var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
+	// 	b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
 
 	b.Handle(&inlineBtnETH, func(c *tb.Callback) {
 		concurrency = "Ethereum"
@@ -495,12 +521,12 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 
-	b.Handle(&inlineBtnLTC, func(c *tb.Callback) {
-		concurrency = "Litecoin"
-		var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
-		b.Respond(c, &tb.CallbackResponse{})
-	})
+	// b.Handle(&inlineBtnLTC, func(c *tb.Callback) {
+	// 	concurrency = "Litecoin"
+	// 	var msg = orglist.EnterSum + "Текущая сумма: " + sum + " " + concurrency
+	// 	b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdsum})
+	// 	b.Respond(c, &tb.CallbackResponse{})
+	// })
 
 	// Выбрать валюту после фонда
 
