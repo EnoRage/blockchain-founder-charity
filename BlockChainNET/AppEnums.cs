@@ -2,7 +2,9 @@
 {
     public enum Pages
     {
-        Main
+        Account,
+        Auth,
+        Info
     }
 
     public enum NavigationMode

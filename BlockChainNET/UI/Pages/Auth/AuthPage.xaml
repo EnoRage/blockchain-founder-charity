@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BlockChainNET.UI.Pages.Auth.AuthPage"
+    xmlns:pages="clr-namespace:BlockChainNET.UI.Pages">
+    <ContentPage.Content>
+        <StackLayout
+            VerticalOptions="Center">
+            <Label
+                Text="Логин Telegram"
+                FontSize="Medium">
+            </Label>
+            <Entry
+                Placeholder="@mynick">
+            </Entry>
+            <Button
+                Text="Войти">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</pages:BasePage>

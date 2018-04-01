@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:BasePage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BlockChainNET.UI.Pages.Account.AccountPage"
+    xmlns:pages="clr-namespace:BlockChainNET.UI.Pages">
+    <StackLayout
+        VerticalOptions="Center">
+        <Label
+            Text="Баланс руб."
+            FontSize="Medium">
+        </Label>
+        <Label
+            Text="Баланс eth"
+            FontSize="Medium">
+        </Label>
+        <Button
+            Text="Мои пожертвования">
+        </Button>
+    </StackLayout>
+</pages:BasePage>

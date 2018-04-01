@@ -19,7 +19,7 @@ namespace BlockChainNET
 
             NavigationService.Init(this);
             DialogService.Init(this);
-            NavigationService.Instance.SetMainPage(Pages.Main);
+            NavigationService.Instance.SetMainPage(Pages.Auth);
             //DataServices.Init(true);
             /*if(Settings.GetPacientSetting() == null || string.IsNullOrWhiteSpace(Settings.GetPacientSetting().Id))
             {
