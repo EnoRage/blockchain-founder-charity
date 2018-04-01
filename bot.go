@@ -120,7 +120,11 @@ func main() {
 	inlineInvMenu := [][]tb.InlineButton{
 		{inlineInv},
 	}
-
+	// NT
+	// inlineYes := tb.InlineButton{Unique: "yes", Text: "✅ Да, я за"}
+	// inlineNo := tb.InlineButton{Unique: "no", Text: "❌ Нет, я против"}
+	// inlineKbrdCalc := [][]tb.InlineButton{{inlineYes, inlineNo}}
+	// NT
 	inlineklav0 := tb.InlineButton{Unique: "klav0", Text: "0️⃣"}
 	inlineklav1 := tb.InlineButton{Unique: "klav1", Text: "1️⃣"}
 	inlineklav2 := tb.InlineButton{Unique: "klav2", Text: "2️⃣"}
@@ -165,6 +169,32 @@ func main() {
 	}
 
 	b.Handle("/start", func(m *tb.Message) {
+
+		/// ТУТ УВЕДОМЛЕНИЕ NT
+		// var orgname = ""
+		// var orgsum = ""
+		// var orgmsg = ""
+		// var msgorg = "Организация "
+		// msgorg += orgname + " "
+		// msgorg += " хочет потратить "
+		// msgorg += orgsum + " на "
+		// msgorg += orgmsg
+		// msgorg += "\n\nКак вы относитесь к этому решению?"
+		// inlineKbrdCalc вот это меню
+
+		// b.Handle(&inlineYes, func(c *tb.Callback) {
+		// 	var msg = "Вы проголосовали За, ваш голос учтен!"
+		// 	b.Edit(c.Message, , &tb.SendOptions{ParseMode: "Markdown"})
+		// 	b.Respond(c, &tb.CallbackResponse{})
+		// })
+		// b.Handle(&inlineNo, func(c *tb.Callback) {
+		// 	var msg = "Вы проголосовали Против, ваш голос учтен!"
+		// 	b.Edit(c.Message, , &tb.SendOptions{ParseMode: "Markdown"})
+		// 	b.Respond(c, &tb.CallbackResponse{})
+		// })
+
+		/// ТУТ УВЕДОМЛЕНИЕ NT
+
 		if !m.Private() {
 			return
 		}
@@ -254,15 +284,14 @@ func main() {
 		if len == 0 {
 			msg += "Вы еще не пожертвовали в какую-лбо организацию, вы можете сделать это сейчас"
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		} else {
+			msg += "Список организаций, в которые вы пожертвовали: "
+			var all = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
+			println(all)
+			msg += "Все имена организаций + сумма инвестиций"
+			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
 		}
-		msg += "Список организаций, в которые вы пожертвовали: "
 
-		var all = mongo.FindUserFoundations(strconv.Itoa(c.Sender.ID))
-		println(all)
-
-		msg += "Все имена организаций + сумма инвестиций"
-
-		b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// Чекаем в кабинете листы и другое
