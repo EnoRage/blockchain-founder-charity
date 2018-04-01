@@ -207,6 +207,8 @@ func main() {
 	b.Handle(&replyBtn1, func(m *tb.Message) {
 		user := mongo.FindUser(strconv.Itoa(m.Sender.ID))
 		var eth = ethereum.GetBalance(user[0].EthAddress)
+		//0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a
+		println(ethereum.GetBalance("0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a"))
 		ethufufuuufuuf, err := strconv.ParseFloat(eth, 64)
 		if err != nil {
 			println(eth)
