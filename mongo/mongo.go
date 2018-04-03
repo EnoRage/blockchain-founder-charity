@@ -51,7 +51,7 @@ func CloseMongoConnection(session *mgo.Session) {
 
 // AddFoundation Добавление фонда
 func AddFoundation(openSession *mgo.Session, name string, foundedDate int32, capital float32, country string, mission string) {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("foundations")
@@ -64,7 +64,7 @@ func AddFoundation(openSession *mgo.Session, name string, foundedDate int32, cap
 
 // AddUser Добавление пользователя
 func AddUser(openSession *mgo.Session, userID string, name string, ethPrvKey string, ethAddress string) {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
@@ -80,7 +80,7 @@ func AddUser(openSession *mgo.Session, userID string, name string, ethPrvKey str
 
 // AddFoundationToUser Добавление благотворительной организации в БД
 func AddFoundationToUser(openSession *mgo.Session, userID string, foundationName string, currency string, investInCurrency float64, investSumRub float64) {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
@@ -105,7 +105,7 @@ func AddFoundationToUser(openSession *mgo.Session, userID string, foundationName
 
 // FindAllFoundations Поиск всех фондов
 func FindAllFoundations(openSession *mgo.Session) []Foundations {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("foundations")
@@ -122,7 +122,7 @@ func FindAllFoundations(openSession *mgo.Session) []Foundations {
 
 // FindAllUsers Поиск всех users
 func FindAllUsers(openSession *mgo.Session) []Users {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
@@ -139,7 +139,7 @@ func FindAllUsers(openSession *mgo.Session) []Users {
 
 // FindUser Поиск конкретного пользователя
 func FindUser(openSession *mgo.Session, userid string) Users {
-	session := openSession.Clone()
+	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
