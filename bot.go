@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"time"
 
+	"gopkg.in/mgo.v2"
+
 	"./course"
 	"./ethereum"
 	"./mongo"
@@ -30,6 +32,8 @@ var courseResult gjson.Result
 var wavesBalanceResult gjson.Result
 var currencyBalanceResult gjson.Result
 
+var session *mgo.Session
+
 func main() {
 	b, err := tb.NewBot(tb.Settings{
 		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY", //продакшн @bf_charity_bot
@@ -37,6 +41,8 @@ func main() {
 		// Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
+
+	session = mongo.ConnectToMongo()
 
 	// Тест объектов
 	// Получаем assetId конкретной валюты
@@ -77,7 +83,7 @@ func main() {
 	// Добавление фонда
 	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
 	// Поиск по фондам
-	foundationCollection := mongo.FindAllFoundations()
+	// foundationCollection := mongo.FindAllFoundations()
 
 	// mongo.AddFoundationToUser("302115726", "Имя", 1.002, 2000.00)
 	// Тестовые логи
@@ -94,9 +100,9 @@ func main() {
 	// println(status)
 
 	// Поиск всех имён из коллекции foundations
-	for k := range foundationCollection {
-		println(foundationCollection[k].Name)
-	}
+	// for k := range foundationCollection {
+	// 	println(foundationCollection[k].Name)
+	// }
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}
@@ -213,8 +219,8 @@ func main() {
 		// println(prvtKeyETH)
 		// println(addressETH)
 		// println(userlogic.Auth(userID))
-		if userlogic.Auth(userID) != true {
-			userlogic.Register(userID, name, prvtKeyETH, addressETH)
+		if userlogic.Auth(session, userID) != true {
+			userlogic.Register(session, userID, name, prvtKeyETH, addressETH)
 			var msg = "Вы зарегистрированы в системе!\n\n"
 			msg += "Ваш *Private Key:* "
 			msg += prvtKeyETH
@@ -247,7 +253,7 @@ func main() {
 		b.Send(m.Sender, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
 	b.Handle(&replyBtn1, func(m *tb.Message) {
-		user := mongo.FindUser(strconv.Itoa(m.Sender.ID))
+		user := mongo.FindUser(session, strconv.Itoa(m.Sender.ID))
 		var eth = ethereum.GetBalance(user.EthAddress)
 		//0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a
 		println("Баланс в Ethereum: " + eth)
@@ -270,7 +276,7 @@ func main() {
 
 	// Чекаем в кабинете листы и другое
 	b.Handle(&inlineData, func(c *tb.Callback) {
-		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		user := mongo.FindUser(session, strconv.Itoa(c.Sender.ID))
 		var address = (user.EthAddress)
 		var key = (user.EthPrvKey)
 		var msg1 = "Мой *адрес* ETH: " + address + "\n\nМой *Private key* " + key
@@ -280,7 +286,7 @@ func main() {
 	b.Handle(&inlineList, func(c *tb.Callback) {
 		// user := mongo.FindUser()
 		var msg = ""
-		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		user := mongo.FindUser(session, strconv.Itoa(c.Sender.ID))
 		fmt.Println(user.Foundations)
 		len := len(user.Foundations)
 		//
@@ -292,7 +298,7 @@ func main() {
 		} else {
 			msg += "Список организаций, в которые вы пожертвовали: \n"
 			for index := range user.Foundations {
-				msg += user.Foundations[index].FoundationName + ". Сумма пожертвования " + strconv.FormatFloat(user.Foundations[index].InvestInCurrency, 8, 'g', 64) + " ETH.\n"
+				msg += "*" + user.Foundations[index].FoundationName + "*" + ". Сумма пожертвования " + strconv.FormatFloat(user.Foundations[index].InvestInCurrency, 'g', 8, 64) + " ETH.\n\n"
 			}
 
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
@@ -304,7 +310,7 @@ func main() {
 	b.Handle(&inlineVote, func(c *tb.Callback) {
 		var chosenorg = ""
 		var msg = "Организация: "
-		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		user := mongo.FindUser(session, strconv.Itoa(c.Sender.ID))
 		msg += user.Foundations[0].FoundationName
 
 		msg += chosenorg
@@ -546,7 +552,7 @@ func main() {
 
 	// final apply
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
-		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+		user := mongo.FindUser(session, strconv.Itoa(c.Sender.ID))
 
 		var userid = strconv.Itoa(c.Sender.ID)
 		var prvtKey = user.EthPrvKey
@@ -570,7 +576,7 @@ func main() {
 		status := ethereum.SendTransaction(prvtKey, address, "0x6c1773936cbae3c0b7814e118b10b84a272a3bd4", sumString)
 
 		if status != "400" {
-			mongo.AddFoundationToUser(userid, fond, concurrency, sum1, torub3)
+			mongo.AddFoundationToUser(session, userid, fond, concurrency, sum1, torub3)
 			var msg = "Перевод совершен успешно, подробности в личном кабинете"
 			concurrency = ""
 			sum = ""

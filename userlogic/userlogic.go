@@ -2,11 +2,12 @@ package userlogic
 
 import (
 	"../mongo"
+	"gopkg.in/mgo.v2"
 )
 
 // Auth Проверка на наличие пользователя в БД
-func Auth(userID string) bool {
-	user := mongo.FindUser(userID)
+func Auth(session *mgo.Session, userID string) bool {
+	user := mongo.FindUser(session, userID)
 
 	if user.UserID != "" {
 		return true
@@ -16,7 +17,7 @@ func Auth(userID string) bool {
 }
 
 // Register Регистрация в БД
-func Register(userID string, userName string, ethPrvtkey string, ethAddress string) {
+func Register(session *mgo.Session, userID string, userName string, ethPrvtkey string, ethAddress string) {
 
-	mongo.AddUser(userID, userName, ethPrvtkey, ethAddress)
+	mongo.AddUser(session, userID, userName, ethPrvtkey, ethAddress)
 }

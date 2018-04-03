@@ -7,7 +7,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type foundations struct {
+// Foundations Структура фондов
+type Foundations struct {
 	Name        string  `bson:"Name"`
 	FoundedDate int32   `bson:"FoundedDate"`
 	Capital     float32 `bson:"Capital"`
@@ -22,7 +23,8 @@ type investInFoundation struct {
 	InvestInRub      float64 `bson:"InvestInRub"`
 }
 
-type users struct {
+// Users Структура пользователя
+type Users struct {
 	UserID      string               `bson:"UserID"`
 	Name        string               `bson:"Name"`
 	EthPrvKey   string               `bson:"EthPrvKey"`
@@ -31,7 +33,7 @@ type users struct {
 }
 
 // ConnectToMongo mongo connection
-func ConnectToMongo() (*mgo.Session, error) {
+func ConnectToMongo() *mgo.Session {
 	session, err := mgo.Dial("mongodb://admin:itss2018!@medicineassistantdb.westeurope.cloudapp.azure.com:27017")
 	if err != nil {
 		panic(err)
@@ -39,7 +41,7 @@ func ConnectToMongo() (*mgo.Session, error) {
 
 	session.SetMode(mgo.Monotonic, true)
 
-	return session, err
+	return session
 }
 
 // CloseMongoConnection mongo close connection
@@ -48,12 +50,12 @@ func CloseMongoConnection(session *mgo.Session) {
 }
 
 // AddFoundation Добавление фонда
-func AddFoundation(name string, foundedDate int32, capital float32, country string, mission string) {
-	session, err := ConnectToMongo()
+func AddFoundation(openSession *mgo.Session, name string, foundedDate int32, capital float32, country string, mission string) {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("foundations")
-	err = c.Insert(&foundations{Name: name, FoundedDate: foundedDate, Capital: capital, Country: country, Mission: mission})
+	err := c.Insert(&Foundations{Name: name, FoundedDate: foundedDate, Capital: capital, Country: country, Mission: mission})
 
 	if err != nil {
 		log.Fatal(err)
@@ -61,15 +63,15 @@ func AddFoundation(name string, foundedDate int32, capital float32, country stri
 }
 
 // AddUser Добавление пользователя
-func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
-	session, err := ConnectToMongo()
+func AddUser(openSession *mgo.Session, userID string, name string, ethPrvKey string, ethAddress string) {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
 
 	//var foundationNullArray []investInFoundation
 
-	err = c.Insert(&users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
+	err := c.Insert(&Users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
 
 	if err != nil {
 		log.Fatal(err)
@@ -77,12 +79,12 @@ func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 }
 
 // AddFoundationToUser Добавление благотворительной организации в БД
-func AddFoundationToUser(userID string, foundationName string, currency string, investInCurrency float64, investSumRub float64) {
-	session, err := ConnectToMongo()
+func AddFoundationToUser(openSession *mgo.Session, userID string, foundationName string, currency string, investInCurrency float64, investSumRub float64) {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
-	results := users{}
+	results := Users{}
 	c.Find(bson.M{"UserID": userID}).One(&results)
 
 	// Массив с фондами человека
@@ -94,7 +96,7 @@ func AddFoundationToUser(userID string, foundationName string, currency string, 
 	// Добавление структуры для фонда
 	arr2 := append(arr1, arr3)
 
-	err = c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"Foundations": arr2}})
+	err := c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"Foundations": arr2}})
 
 	if err != nil {
 		log.Fatal(err)
@@ -102,52 +104,52 @@ func AddFoundationToUser(userID string, foundationName string, currency string, 
 }
 
 // FindAllFoundations Поиск всех фондов
-func FindAllFoundations() []foundations {
-	session, err := ConnectToMongo()
+func FindAllFoundations(openSession *mgo.Session) []Foundations {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("foundations")
 
+	var results []Foundations
+	err := c.Find(bson.M{}).All(&results)
+
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	var results []foundations
-	c.Find(bson.M{}).All(&results)
 
 	return results
 }
 
 // FindAllUsers Поиск всех users
-func FindAllUsers() []users {
-	session, err := ConnectToMongo()
+func FindAllUsers(openSession *mgo.Session) []Users {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
 
+	var results []Users
+	err := c.Find(bson.M{}).All(&results)
+
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	var results []users
-	c.Find(bson.M{}).All(&results)
 
 	return results
 }
 
 // FindUser Поиск конкретного пользователя
-func FindUser(userid string) users {
-	session, err := ConnectToMongo()
+func FindUser(openSession *mgo.Session, userid string) Users {
+	session := openSession.Clone()
 	defer CloseMongoConnection(session)
 
 	c := session.DB("BlockChainDB").C("users")
 
+	var results Users
+	err := c.Find(bson.M{"UserID": userid}).One(&results)
+
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	var results users
-	c.Find(bson.M{"UserID": userid}).One(&results)
 
 	return results
 }
