@@ -1,8 +1,17 @@
 const Accounts = require('web3-eth-accounts'),
     Tx = require('ethereumjs-tx'),
     rp = require('request-promise'),
+    Web3 = require('web3'),
     safeMath = require('./safeMath.js');
 
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
+
+//var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
 var accounts = new Accounts('ws://localhost:8546');
 
 const apiKeyToken = 'KF2VV1A88HNTQMKFBD3VYBD59SVKR5Z1QA';
@@ -60,7 +69,7 @@ function sendTx(_prvtKey, _sender, _receiver, _amount, callback) {
                         }
                         rp(options)
                             .then((tx) => {
-                                
+
                                 if (tx.error) {
                                     console.log('Транзакция не произведена');
                                     console.log(tx);
@@ -85,4 +94,3 @@ module.exports.createNewAccount = createNewAccount;
 module.exports.getBalance = getBalance;
 module.exports.getAddress = getAddress;
 module.exports.sendTx = sendTx;
-
