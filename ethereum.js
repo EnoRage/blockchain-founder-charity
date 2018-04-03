@@ -27,7 +27,7 @@ function getAddress(privateKey) {
     return account.address;
 }
 
-function sendTx(_prvtKey, _sender, _receiver, _amount) {
+function sendTx(_prvtKey, _sender, _receiver, _amount, callback) {
     let privateKey = new Buffer(_prvtKey.substring(2), 'hex');
 
     var tx = new Tx();
@@ -58,25 +58,23 @@ function sendTx(_prvtKey, _sender, _receiver, _amount) {
                             uri: 'https://' + Network + '.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=0x' + serializedTx.toString('hex') + '&apikey=' + apiKeyToken,
                             json: true
                         }
-
                         rp(options)
                             .then((tx) => {
+                                
                                 if (tx.error) {
                                     console.log('Транзакция не произведена');
-                                    console.log(tx)
-                                    return "400"
-
-
+                                    console.log(tx);
+                                    callback(false);
                                 } else {
                                     console.log(tx);
-                                    return "200"
+                                    callback(true);
                                 }
                             })
                             .catch((err) => {
                                 console.log('Транзакция не произведена')
+                                allback(true);
                             });
                     });
-
             }
         )
 }
@@ -87,3 +85,4 @@ module.exports.createNewAccount = createNewAccount;
 module.exports.getBalance = getBalance;
 module.exports.getAddress = getAddress;
 module.exports.sendTx = sendTx;
+
