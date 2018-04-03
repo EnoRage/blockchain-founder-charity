@@ -69,5 +69,6 @@ func SendTransaction(prvtKey string, sender string, receiver string, amount stri
 		"amount":   {amount},
 	}
 	status := post("http://localhost:3000/sendTx", postData)
+	println(status)
 	return status
 }

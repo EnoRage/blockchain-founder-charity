@@ -2,7 +2,6 @@ package mongo
 
 import (
 	"log"
-	"strconv"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -16,12 +15,19 @@ type foundations struct {
 	Mission     string  `bson:"Mission"`
 }
 
+type investInFoundation struct {
+	FoundationName   string  `bson:"FoundationName"`
+	Currency         string  `bson:"Currency"`
+	InvestInCurrency float64 `bson:"InvestInCurrency"`
+	InvestInRub      float64 `bson:"InvestInRub"`
+}
+
 type users struct {
-	UserID      string     `bson:"UserID"`
-	Name        string     `bson:"Name"`
-	EthPrvKey   string     `bson:"EthPrvKey"`
-	EthAddress  string     `bson:"EthAddress"`
-	Foundations [][]string `bson:"Foundations"`
+	UserID      string               `bson:"UserID"`
+	Name        string               `bson:"Name"`
+	EthPrvKey   string               `bson:"EthPrvKey"`
+	EthAddress  string               `bson:"EthAddress"`
+	Foundations []investInFoundation `bson:"Foundations"`
 }
 
 // ConnectToMongo mongo connection
@@ -61,9 +67,9 @@ func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 
 	c := session.DB("BlockChainDB").C("users")
 
-	var foundationNullArray [][]string
+	//var foundationNullArray []investInFoundation
 
-	err = c.Insert(&users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress, Foundations: foundationNullArray})
+	err = c.Insert(&users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
 
 	if err != nil {
 		log.Fatal(err)
@@ -71,7 +77,6 @@ func AddUser(userID string, name string, ethPrvKey string, ethAddress string) {
 }
 
 // AddFoundationToUser Добавление благотворительной организации в БД
-
 func AddFoundationToUser(userID string, foundationName string, currency string, investInCurrency float64, investSumRub float64) {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
@@ -80,25 +85,13 @@ func AddFoundationToUser(userID string, foundationName string, currency string, 
 	results := users{}
 	c.Find(bson.M{"UserID": userID}).One(&results)
 
-	var counter int = 0
-	for i := 0; i < len(results.Foundations); i++ {
-		if len(results.Foundations) != 0 {
-			if results.Foundations[i][0] != "" {
-				counter++
-			} else {
-				break
-			}
-		} else {
-			break
-		}
-
-	}
-	println(string(counter))
-
+	// Массив с фондами человека
 	arr1 := results.Foundations
 
-	arr3 := []string{foundationName, currency, strconv.FormatFloat(investInCurrency, 'g', 8, 64), strconv.FormatFloat(investSumRub, 'g', 8, 64)}
+	// Новая структура для добавленного фонда
+	arr3 := investInFoundation{FoundationName: foundationName, Currency: currency, InvestInCurrency: investInCurrency, InvestInRub: investSumRub}
 
+	// Добавление структуры для фонда
 	arr2 := append(arr1, arr3)
 
 	err = c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"Foundations": arr2}})
@@ -142,8 +135,8 @@ func FindAllUsers() []users {
 	return results
 }
 
-// FindAllUsers Поиск всех users
-func FindUser(userid string) []users {
+// FindUser Поиск конкретного пользователя
+func FindUser(userid string) users {
 	session, err := ConnectToMongo()
 	defer CloseMongoConnection(session)
 
@@ -153,8 +146,8 @@ func FindUser(userid string) []users {
 		log.Fatal(err)
 	}
 
-	var results []users
-	c.Find(bson.M{"UserID": userid}).All(&results)
+	var results users
+	c.Find(bson.M{"UserID": userid}).One(&results)
 
 	return results
 }

@@ -6,9 +6,9 @@ import (
 
 // Auth Проверка на наличие пользователя в БД
 func Auth(userID string) bool {
-	len := len(mongo.FindUser(userID))
+	user := mongo.FindUser(userID)
 
-	if len != 0 {
+	if user.UserID != "" {
 		return true
 	} else {
 		return false

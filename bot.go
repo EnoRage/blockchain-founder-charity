@@ -248,7 +248,7 @@ func main() {
 	})
 	b.Handle(&replyBtn1, func(m *tb.Message) {
 		user := mongo.FindUser(strconv.Itoa(m.Sender.ID))
-		var eth = ethereum.GetBalance(user[0].EthAddress)
+		var eth = ethereum.GetBalance(user.EthAddress)
 		//0x7fb5f775c04b42bdc7506404272a3845d6d2e6c0be1671b24bc242f9ea43912a
 		println("Баланс в Ethereum: " + eth)
 		ethufufuuufuuf, err := strconv.ParseFloat(eth, 64)
@@ -271,8 +271,8 @@ func main() {
 	// Чекаем в кабинете листы и другое
 	b.Handle(&inlineData, func(c *tb.Callback) {
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
-		var address = (user[0].EthAddress)
-		var key = (user[0].EthPrvKey)
+		var address = (user.EthAddress)
+		var key = (user.EthPrvKey)
 		var msg1 = "Мой *адрес* ETH: " + address + "\n\nМой *Private key* " + key
 		b.Send(c.Sender, msg1, &tb.SendOptions{ParseMode: "Markdown"})
 		b.Respond(c, &tb.CallbackResponse{})
@@ -281,8 +281,8 @@ func main() {
 		// user := mongo.FindUser()
 		var msg = ""
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
-		fmt.Println(user[0].Foundations)
-		len := len(user[0].Foundations)
+		fmt.Println(user.Foundations)
+		len := len(user.Foundations)
 		//
 
 		//
@@ -291,9 +291,8 @@ func main() {
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		} else {
 			msg += "Список организаций, в которые вы пожертвовали: \n"
-			for index := range user[0].Foundations {
-				msg += user[0].Foundations[index][0] + ". Сумма пожертвования " + user[0].Foundations[index][2] + ".\n"
-				// fmt.Println("Название: " + user[0].Foundations[index][0])
+			for index := range user.Foundations {
+				msg += user.Foundations[index].FoundationName + ". Сумма пожертвования " + strconv.FormatFloat(user.Foundations[index].InvestInCurrency, 8, 'g', 64) + " ETH.\n"
 			}
 
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
@@ -306,7 +305,7 @@ func main() {
 		var chosenorg = ""
 		var msg = "Организация: "
 		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
-		msg += user[0].Foundations[0][0]
+		msg += user.Foundations[0].FoundationName
 
 		msg += chosenorg
 		msg += " собирается вывести 0.4 ETH на покупку новой версии Windows сотруднику"
@@ -483,8 +482,6 @@ func main() {
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineklavapply, func(c *tb.Callback) {
-		var userid = strconv.Itoa(c.Sender.ID)
-
 		var torub = course.Course("RUB")
 		var torub2, err = strconv.ParseFloat(sum, 64)
 		if err != nil {
@@ -493,34 +490,11 @@ func main() {
 		torub3 := (1.0 / (gjson.Get(string(torub), "ETH").Float())) * torub2
 
 		var ethrub = strconv.FormatFloat(torub3, 'g', 8, 64)
-		println(ethrub)
 
-		sum1, err := strconv.ParseFloat(sum, 64)
-		if err != nil {
-			println(err)
-		}
-		sum2, err := strconv.ParseFloat(rubsum, 64)
-		if err != nil {
-			println(err)
-		}
+		var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
 
-		var sum23 = sum1 * math.Pow(10, 18)
-		var sumString = strconv.FormatFloat(sum23, 'g', 18, 64)
-		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
-		var prvtKey = user[0].EthPrvKey
-		var address = user[0].EthAddress
-		// status := ethereum.SendTransaction(prvtKey, address, "0xD2fF58c7498f848402149bFD0d37Ff98d3548a35", sumString)
-		status := ethereum.SendTransaction(prvtKey, address, "0x6c1773936cbae3c0b7814e118b10b84a272a3bd4", sumString)
-		if status != "400" {
-			var msg = "*Данные о переводе*\n\n" + "`Организация: ` *" + fond + "*\n\n`Сумма пожертвования:` *" + sum + "*` " + concurrency + "` или *" + ethrub + "* `RUB`"
-			mongo.AddFoundationToUser(userid, fond, concurrency, sum1, sum2)
-			b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
-			b.Respond(c, &tb.CallbackResponse{})
-		} else {
-			var text = "Недостаточно средств на балансе"
-			b.Send(c.Sender, text, &tb.SendOptions{DisableWebPagePreview: true, ParseMode: "Markdown"}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
-			b.Respond(c, &tb.CallbackResponse{})
-		}
+		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdaply})
+		b.Respond(c, &tb.CallbackResponse{})
 
 	})
 	b.Handle(&inlineklavback, func(c *tb.Callback) {
@@ -572,13 +546,43 @@ func main() {
 
 	// final apply
 	b.Handle(&inlinуvapply, func(c *tb.Callback) {
-		var msg = "Перевод совершен успешно, подробности в личном кабинете"
-		concurrency = ""
-		sum = ""
-		fond = ""
-		b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
-		b.Send(c.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
-		b.Respond(c, &tb.CallbackResponse{})
+		user := mongo.FindUser(strconv.Itoa(c.Sender.ID))
+
+		var userid = strconv.Itoa(c.Sender.ID)
+		var prvtKey = user.EthPrvKey
+		var address = user.EthAddress
+
+		var torub = course.Course("RUB")
+		var torub2, err = strconv.ParseFloat(sum, 64)
+		if err != nil {
+			println(err)
+		}
+		torub3 := (1.0 / (gjson.Get(string(torub), "ETH").Float())) * torub2
+
+		sum1, err := strconv.ParseFloat(sum, 64)
+		if err != nil {
+			println(err)
+		}
+
+		var sum23 = sum1 * math.Pow(10, 18)
+		var sumString = strconv.FormatFloat(sum23, 'g', 18, 64)
+
+		status := ethereum.SendTransaction(prvtKey, address, "0x6c1773936cbae3c0b7814e118b10b84a272a3bd4", sumString)
+
+		if status != "400" {
+			mongo.AddFoundationToUser(userid, fond, concurrency, sum1, torub3)
+			var msg = "Перевод совершен успешно, подробности в личном кабинете"
+			concurrency = ""
+			sum = ""
+			fond = ""
+			b.Edit(c.Message, msg, &tb.SendOptions{ParseMode: "Markdown"})
+			b.Send(c.Sender, "Главное меню", &tb.SendOptions{DisableWebPagePreview: true}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+			b.Respond(c, &tb.CallbackResponse{})
+		} else {
+			var text = "Недостаточно средств на балансе"
+			b.Send(c.Sender, text, &tb.SendOptions{DisableWebPagePreview: true, ParseMode: "Markdown"}, &tb.ReplyMarkup{ReplyKeyboard: replyKeys})
+			b.Respond(c, &tb.CallbackResponse{})
+		}
 	})
 	// final apply
 
