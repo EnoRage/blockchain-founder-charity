@@ -112,7 +112,7 @@ var contractABI = [
 
 // contract1.showAdd()
 
-var myContract = new web3.eth.Contract(contractABI);
+// var myContract = new web3.eth.Contract(contractABI);
 
 // myContract.methods.showAdd()
 
