@@ -4,117 +4,26 @@ const Accounts = require('web3-eth-accounts'),
 	Web3 = require('web3'),
 	safeMath = require('./safeMath.js');
 
-if (typeof web3 !== 'undefined') {
-	web3 = new Web3(web3.currentProvider);
-} else {
-	// set the provider you want from Web3.providers
-	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-}
+// if (typeof web3 !== 'undefined') {
+// 	web3 = new Web3(web3.currentProvider);
+// } else {
+// 	// set the provider you want from Web3.providers
+// 	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+// }
 
-var contractABI = [
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "finalress",
-		"outputs": [{
-			"name": "",
-			"type": "bool"
-		}],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "investPart",
-		"outputs": [{
-			"name": "",
-			"type": "uint256"
-		}],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "showTotal",
-		"outputs": [{
-			"name": "",
-			"type": "uint256"
-		}],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "showVotres",
-		"outputs": [{
-			"name": "",
-			"type": "int256"
-		}],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "fallback"
-	},
-	{
-		"constant": false,
-		"inputs": [{
-			"name": "res",
-			"type": "int256"
-		}],
-		"name": "vote",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "showAdd",
-		"outputs": [{
-			"name": "",
-			"type": "address"
-		}],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "",
-		"outputs": [{
-			"name": "",
-			"type": "bool"
-		}],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
-
-// web3.eth.getAccounts(console.log);
-// var contract = web3.eth.contract(abiArray);
+// var contractABI = [{"constant":false,"inputs":[],"name":"finalress","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"showTotal","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"res","type":"int256"}],"name":"vote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"showVotres","outputs":[{"name":"","type":"int256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"investPart","outputs":[{"name":"","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"showFinalRes","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"showAdd","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"}]
 
 // var ContractAddress = "0x6C1773936cbae3c0b7814E118b10b84A272a3Bd4";
 
 // var contract1 = new web3.eth.Contract(contractABI, ContractAddress, {gasPrice: '12345678', from: "0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433"});
 
-// contract1.showAdd()
+// contract1.methods.vote().call({res: 1},(err, addr) => {
+// 	console.log(addr)
+// })
 
-// var myContract = new web3.eth.Contract(contractABI);
-
-// myContract.methods.showAdd()
+// contract1.methods.showVotres().call({from: "0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433"},function(error, result){
+//     console.log(result)
+// });
 
 
 
