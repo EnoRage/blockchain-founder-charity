@@ -3,10 +3,10 @@ const mongoose = require("mongoose"),
 
 mongoose.Promise = global.Promise;
 
-const user = 'admin';
-const password = 'itss2018!';
-const uri = 'mongodb://admin:itss2018\!@medicineassistantdb.westeurope.cloudapp.azure.com:27017/BlockChainDB?authSource=admin'; // Мейн нет ПОМЕНЯТЬ
-
+// const user = 'admin';
+// const password = 'itss2018!';
+// const uri = 'mongodb://admin:itss2018\!@medicineassistantdb.westeurope.cloudapp.azure.com:27017/BlockChainDB?authSource=admin'; // Мейн нет ПОМЕНЯТЬ
+// const uri = 'mongodb://51.144.89.99:27017/Charity'; // Мейн нет ПОМЕНЯТЬ
 const options = {
     autoIndex: false,
     reconnectTries: Number.MAX_VALUE,
