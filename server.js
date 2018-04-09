@@ -3,7 +3,8 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     Ethereum = require('./ethereum.js'),
     Bitcoin = require('./bitcoin.js'),
-    db = require('./db.js');
+    db = require('./db.js'),
+    nt = require('./nt.js');
 
 
 const app = express();
@@ -71,6 +72,14 @@ app.post('/sendBtcTx', (req, res) => {
     var data = req.body;
     console.log(data);
     Bitcoin.sendTx(data.prvtKey, data.sender, data.receiver, data.amount);
+    res.send('200');
+});
+
+// Отправляем уведомление
+app.post('/sendNot', (req, res) => {
+    var data = req.body;
+    console.log(data)
+    nt.sendNot(data.userID, data.text);
     res.send('200');
 });
 
