@@ -1,8 +1,6 @@
 package mongo
 
 import (
-	"log"
-
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -17,24 +15,24 @@ type Foundations struct {
 }
 
 type investInFoundation struct {
-	FoundationName   string  `bson:"FoundationName"`
-	Currency         string  `bson:"Currency"`
-	InvestInCurrency float64 `bson:"InvestInCurrency"`
-	InvestInRub      float64 `bson:"InvestInRub"`
+	FoundationName   string  `bson:"foundationName"`
+	Currency         string  `bson:"currency"`
+	InvestInCurrency float64 `bson:"investInCurrency"`
+	InvestInRub      float64 `bson:"investInRub"`
 }
 
 // Users Структура пользователя
 type Users struct {
-	UserID      string               `bson:"UserID"`
-	Name        string               `bson:"Name"`
-	EthPrvKey   string               `bson:"EthPrvKey"`
-	EthAddress  string               `bson:"EthAddress"`
-	Foundations []investInFoundation `bson:"Foundations"`
+	UserID      string               `bson:"userID"`
+	Name        string               `bson:"name"`
+	EthPrvKey   string               `bson:"ethPrvKey"`
+	EthAddress  string               `bson:"ethAddress"`
+	Foundations []investInFoundation `bson:"foundations"`
 }
 
 // ConnectToMongo mongo connection
 func ConnectToMongo() *mgo.Session {
-	session, err := mgo.Dial("mongodb://admin:itss2018!@medicineassistantdb.westeurope.cloudapp.azure.com:27017")
+	session, err := mgo.Dial("mongodb://erage:doBH8993nnjdoBH8993nnj@51.144.89.99:27017")
 	if err != nil {
 		panic(err)
 	}
@@ -54,11 +52,11 @@ func AddFoundation(openSession *mgo.Session, name string, foundedDate int32, cap
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("foundations")
+	c := session.DB("ImCup").C("foundations")
 	err := c.Insert(&Foundations{Name: name, FoundedDate: foundedDate, Capital: capital, Country: country, Mission: mission})
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 }
 
@@ -67,14 +65,14 @@ func AddUser(openSession *mgo.Session, userID string, name string, ethPrvKey str
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("users")
+	c := session.DB("ImCup").C("users")
 
 	//var foundationNullArray []investInFoundation
 
 	err := c.Insert(&Users{UserID: userID, Name: name, EthPrvKey: ethPrvKey, EthAddress: ethAddress})
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 }
 
@@ -83,7 +81,7 @@ func AddFoundationToUser(openSession *mgo.Session, userID string, foundationName
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("users")
+	c := session.DB("ImCup").C("users")
 	results := Users{}
 	c.Find(bson.M{"UserID": userID}).One(&results)
 
@@ -96,10 +94,10 @@ func AddFoundationToUser(openSession *mgo.Session, userID string, foundationName
 	// Добавление структуры для фонда
 	arr2 := append(arr1, arr3)
 
-	err := c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"Foundations": arr2}})
+	err := c.Update(bson.M{"UserID": userID}, bson.M{"$set": bson.M{"foundations": arr2}})
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 }
 
@@ -108,13 +106,13 @@ func FindAllFoundations(openSession *mgo.Session) []Foundations {
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("foundations")
+	c := session.DB("ImCup").C("foundations")
 
 	var results []Foundations
 	err := c.Find(bson.M{}).All(&results)
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	return results
@@ -125,13 +123,13 @@ func FindAllUsers(openSession *mgo.Session) []Users {
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("users")
+	c := session.DB("ImCup").C("users")
 
 	var results []Users
 	err := c.Find(bson.M{}).All(&results)
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	return results
@@ -142,13 +140,13 @@ func FindUser(openSession *mgo.Session, userid string) Users {
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("BlockChainDB").C("users")
+	c := session.DB("ImCup").C("users")
 
 	var results Users
-	err := c.Find(bson.M{"UserID": userid}).One(&results)
+	err := c.Find(bson.M{"userID": userid}).One(&results)
 
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
 	return results

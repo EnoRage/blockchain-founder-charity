@@ -1,6 +1,8 @@
 package userlogic
 
 import (
+	"fmt"
+
 	"../mongo"
 	"gopkg.in/mgo.v2"
 )
@@ -8,7 +10,7 @@ import (
 // Auth Проверка на наличие пользователя в БД
 func Auth(session *mgo.Session, userID string) bool {
 	user := mongo.FindUser(session, userID)
-
+	fmt.Print(user)
 	if user.UserID != "" {
 		return true
 	} else {

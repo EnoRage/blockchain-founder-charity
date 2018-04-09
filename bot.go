@@ -12,10 +12,9 @@ import (
 	"./course"
 	"./ethereum"
 	"./mongo"
-	"./objects"
+	notification "./notifications"
 	"./orglist"
 	"./userlogic"
-	"./waves"
 	"github.com/tidwall/gjson"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
@@ -37,72 +36,12 @@ var session *mgo.Session
 func main() {
 	b, err := tb.NewBot(tb.Settings{
 		// Token: "576497547:AAFqeiPb5j5fVktRPqtzpTvaIp8ExKlZZAY", //продакшн @bf_charity_bot
-		Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
-		// Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
+		// Token: "525513661:AAEdYAbizNP8SiT2fhjweHRZULFL84KsUYk", //Никита @botGoTestBot.
+		Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
-
+	notification.Send("36658270", "Привет!")
 	session = mongo.ConnectToMongo()
-
-	// Тест объектов
-	// Получаем assetId конкретной валюты
-	assetID := objects.GetAssetID(objects.Bitcoin)
-	// Получаем name конкретной валюты
-	name := objects.GetName(objects.Bitcoin)
-	// Получаем ticker конкретной валюты
-	ticker := objects.GetTicker(objects.Bitcoin)
-
-	// Тест курсов
-	// Получаем JSON формат курсов
-	courseJSON = course.Course("USD")
-	/*
-		Берём конкретное значение по кусам.
-		Доступные параметры: WAVES, BTC, ETH, ZEC, LTC, USD, EUR
-	*/
-	courseResult = gjson.Get(string(courseJSON), "WAVES")
-
-	// Тест Waves
-	// Получаем баланс аккаунта в WAVES
-	wavesBalanceResult = waves.GetWavesBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2")
-	// Получаем баланс аккаунта в другой валюте
-	currencyBalanceResult = waves.GetBalance("3P3Xd5x7hqKjhKhJXKfPo1RVhixTCWA9TE2", objects.GetAssetID(objects.ZCash))
-	// Создание Seed
-	seed := waves.CreateSeed()
-
-	// Тест подключения nodejs
-	// Получаем privateKey
-	prvtKey := ethereum.CreatePrvtKey()
-	// Получаем адрес
-	address := ethereum.GetAddress(prvtKey)
-	// Получаем баланс эфира
-	balance := ethereum.GetBalance("0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433")
-	// Отправляем транзакцию
-	// status := ethereum.SendTransaction("0x61d94d1c3335c6c30c1336da9e4d54a586f1ffa882338a8bb9f8268296434bc9", "0x6D377De54Bde59c6a4B0fa15Cb2EFB84BB32D433", "0x03b825db4af2A61eaFdeCe3A2AA3039743996df2", "1000")
-
-	//Тест mongoDB
-	// Добавление фонда
-	// mongo.AddFoundation("Имя", 2018, 1.3, "Россия", "Информация о фонде")
-	// Поиск по фондам
-	// foundationCollection := mongo.FindAllFoundations()
-
-	// mongo.AddFoundationToUser("302115726", "Имя", 1.002, 2000.00)
-	// Тестовые логи
-	println(assetID)
-	println(name)
-	println(ticker)
-	println(courseResult.String())
-	println(wavesBalanceResult.String())
-	println(currencyBalanceResult.String())
-	println(seed.String())
-	println(prvtKey)
-	println(address)
-	println(balance)
-	// println(status)
-
-	// Поиск всех имён из коллекции foundations
-	// for k := range foundationCollection {
-	// 	println(foundationCollection[k].Name)
-	// }
 
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}
@@ -171,8 +110,6 @@ func main() {
 	inlineCurrencys := [][]tb.InlineButton{
 		{inlineData}, {inlineList}, {inlineVote},
 	}
-
-	course.Course("USD")
 
 	if err != nil {
 		log.Fatal(err)
