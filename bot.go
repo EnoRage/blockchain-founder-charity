@@ -12,7 +12,6 @@ import (
 	"./course"
 	"./ethereum"
 	"./mongo"
-	notification "./notifications"
 	"./orglist"
 	"./userlogic"
 	"github.com/tidwall/gjson"
@@ -40,9 +39,9 @@ func main() {
 		Token:  "539909670:AAFk7Lxz73lTbtfjf8xIReCwSoEZZpjAlqI", //Кирилл @kirillBotGo_bot
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
-	notification.Send("36658270", "Привет!")
-	session = mongo.ConnectToMongo()
 
+	session = mongo.ConnectToMongo()
+	
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}
 	replyKeys := [][]tb.ReplyButton{
@@ -235,7 +234,8 @@ func main() {
 		} else {
 			msg += "Список организаций, в которые вы пожертвовали: \n"
 			for index := range user.Foundations {
-				msg += "*" + user.Foundations[index].FoundationName + "*" + ". Сумма пожертвования " + strconv.FormatFloat(user.Foundations[index].InvestInCurrency, 'g', 8, 64) + " ETH.\n\n"
+				fond := mongo.FindFoundationByID(session, user.Foundations[index].ID.String())
+				msg += "*" + fond.Name + "*" + ". Сумма пожертвования " + strconv.FormatFloat(user.Foundations[index].InvestInCurrency, 'g', 8, 64) + " ETH.\n\n"
 			}
 
 			b.Send(c.Sender, msg, &tb.SendOptions{ParseMode: "Markdown"})
@@ -248,7 +248,8 @@ func main() {
 		var chosenorg = ""
 		var msg = "Организация: "
 		user := mongo.FindUser(session, strconv.Itoa(c.Sender.ID))
-		msg += user.Foundations[0].FoundationName
+		fond := mongo.FindFoundationByID(session, user.Foundations[0].ID.String())
+		msg += fond.Name
 
 		msg += chosenorg
 		msg += " собирается вывести 0.4 ETH на покупку новой версии Windows сотруднику"
@@ -513,7 +514,9 @@ func main() {
 		status := ethereum.SendTransaction(prvtKey, address, "0x6c1773936cbae3c0b7814e118b10b84a272a3bd4", sumString)
 
 		if status != "400" {
-			mongo.AddFoundationToUser(session, userid, fond, concurrency, sum1, torub3)
+			fondObj := mongo.FindFoundationByName(session, fond)
+
+			mongo.AddFoundationToUser(session, userid, fondObj.ID.String(), concurrency, sum1, torub3)
 			var msg = "Перевод совершен успешно, подробности в личном кабинете"
 			concurrency = ""
 			sum = ""

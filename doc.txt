@@ -35,3 +35,9 @@
 
 Отправить уведомление
     notification.Send("123453321", "Привет!")
+
+Голосования
+Создать голосование
+    mongo.CreateVote(session, "5abfac858173e1b2e81fb2b8", "Можно плз мы купим что-нибудь?", "2")
+Проголосовать
+    mongo.AddVoter(session, "5acbddca172847d2da03bf35", true, "5")
