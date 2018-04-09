@@ -13,7 +13,7 @@ import (
 type Foundations struct {
 	ID          bson.ObjectId `bson:"_id,omitempty"`
 	Name        string        `bson:"name"`
-	FoundedDate int32         `bson:"foundedDate"`
+	FoundedDate int           `bson:"foundedDate"`
 	Capital     float32       `bson:"capital"`
 	Country     string        `bson:"country"`
 	Mission     string        `bson:"mission"`
@@ -21,7 +21,7 @@ type Foundations struct {
 
 type investInFoundation struct {
 	ID               bson.ObjectId `bson:"_id,omitempty"`
-	FoundationID     string        `bson:"foundationName"`
+	FoundationID     string        `bson:"foundationID"`
 	Currency         string        `bson:"currency"`
 	InvestInCurrency float64       `bson:"investInCurrency"`
 	InvestInRub      float64       `bson:"investInRub"`
@@ -73,7 +73,7 @@ func CloseMongoConnection(session *mgo.Session) {
 }
 
 // AddFoundation Добавление фонда
-func AddFoundation(openSession *mgo.Session, name string, foundedDate int32, capital float32, country string, mission string) {
+func AddFoundation(openSession *mgo.Session, name string, foundedDate int, capital float32, country string, mission string) {
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
@@ -140,7 +140,7 @@ func AddFoundationToUser(openSession *mgo.Session, userID string, foundationID s
 	session := openSession.Copy()
 	defer CloseMongoConnection(session)
 
-	c := session.DB("ImCup").C("users")
+	c := session.DB("ImCup").C("foundations")
 	results := Users{}
 	c.Find(bson.M{"UserID": userID}).One(&results)
 

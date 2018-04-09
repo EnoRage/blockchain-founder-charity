@@ -41,7 +41,7 @@ func main() {
 	})
 
 	session = mongo.ConnectToMongo()
-	
+
 	replyBtn1 := tb.ReplyButton{Text: "💳 Мой кабинет"}
 	replyBtn2 := tb.ReplyButton{Text: "💸 Список благотворительных организаций"}
 	replyKeys := [][]tb.ReplyButton{
@@ -186,7 +186,7 @@ func main() {
 	})
 	// тут переход в список фондов с пожертвованиями
 	b.Handle(&replyBtn2, func(m *tb.Message) {
-		b.Send(m.Sender, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Send(m.Sender, orglist.GetFoundations(session)[0], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 	})
 	b.Handle(&replyBtn1, func(m *tb.Message) {
 		user := mongo.FindUser(session, strconv.Itoa(m.Sender.ID))
@@ -273,31 +273,31 @@ func main() {
 	// inline buttons 1-9 Инфа о фондах
 
 	b.Handle(&inlineBtn0, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[0], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn1, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data1, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[1], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn2, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[2], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn3, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data3, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[3], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn4, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data4, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[4], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn5, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data5, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[5], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	b.Handle(&inlineBtn6, func(c *tb.Callback) {
-		b.Edit(c.Message, orglist.Data6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
+		b.Edit(c.Message, orglist.GetFoundations(session)[6], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineKbrdCalc})
 		b.Respond(c, &tb.CallbackResponse{})
 	})
 	// b.Handle(&inlineBtn7, func(c *tb.Callback) {
@@ -313,32 +313,46 @@ func main() {
 
 	// слушает какой фонд выбрал
 	b.Handle("/fond0", func(m *tb.Message) {
-		fond = "Bill & Melinda Gates Foundation"
-		b.Send(m.Sender, orglist.DataAdd, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[0].Name
+		// fond = "Bill & Melinda Gates Foundation"
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[0], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond1", func(m *tb.Message) {
-		fond = "Подари Жизнь"
-		b.Send(m.Sender, orglist.DataAdd1, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[1].Name
+		// fond = "Подари Жизнь"
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[1], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond2", func(m *tb.Message) {
-		fond = "Welcome Trust"
-		b.Send(m.Sender, orglist.DataAdd2, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		// fond = "Welcome Trust"
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[2].Name
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[2], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond3", func(m *tb.Message) {
-		fond = "Ford Foundation"
-		b.Send(m.Sender, orglist.DataAdd3, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		// fond = "Ford Foundation"
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[3].Name
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[3], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond4", func(m *tb.Message) {
-		fond = "Linux Foundation"
-		b.Send(m.Sender, orglist.DataAdd4, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[4].Name
+		// fond = "Linux Foundation"
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[4], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond5", func(m *tb.Message) {
-		fond = "Ethereum Foundation"
-		b.Send(m.Sender, orglist.DataAdd5, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[5].Name
+		// fond = "Ethereum Foundation"
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[5], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 	b.Handle("/fond6", func(m *tb.Message) {
-		fond = "РусФонда"
-		b.Send(m.Sender, orglist.DataAdd6, &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
+		allFonds := mongo.FindAllFoundations(session)
+		fond = allFonds[6].Name
+		// fond = "РусФонда"
+		b.Send(m.Sender, orglist.GetAllInfoAbtFoundations(session)[6], &tb.SendOptions{ParseMode: "Markdown"}, &tb.ReplyMarkup{InlineKeyboard: inlineInvMenu})
 	})
 
 	// слушает какой фонд выбрал
