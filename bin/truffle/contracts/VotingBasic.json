@@ -1,0 +1,38 @@
+{
+    "abi": "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"investrosBal\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"investorsVote\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"proposalId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proposalsSum\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"investors\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proposalsWhy\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"orgAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proposalAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"orgBalance\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"finalResult\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]",
+    "bytecode": "6060604052341561000f57600080fd5b6102ef8061001e6000396000f3006060604052600436106100ae5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630841096781146100b3578063137eeaa4146100e45780632dfca4451461011757806330a009751461012a5780633feb5f2b14610140578063785cbf5b14610172578063797ea25d1461018857806389107dc81461019b5780639f820650146101b1578063f3a8286f146101c4578063f851a440146101d7575b600080fd5b34156100be57600080fd5b6100d2600160a060020a03600435166101ea565b60405190815260200160405180910390f35b34156100ef57600080fd5b610103600160a060020a03600435166101fc565b604051901515815260200160405180910390f35b341561012257600080fd5b6100d2610211565b341561013557600080fd5b6100d2600435610217565b341561014b57600080fd5b610156600435610229565b604051600160a060020a03909116815260200160405180910390f35b341561017d57600080fd5b6100d2600435610251565b341561019357600080fd5b610156610263565b34156101a657600080fd5b610156600435610272565b34156101bc57600080fd5b6100d261028d565b34156101cf57600080fd5b610103610293565b34156101e257600080fd5b6101566102b4565b60026020526000908152604090205481565b60036020526000908152604090205460ff1681565b60095481565b60076020526000908152604090205481565b600480548290811061023757fe5b600091825260209091200154600160a060020a0316905081565b60066020526000908152604090205481565b600154600160a060020a031681565b600860205260009081526040902054600160a060020a031681565b60005481565b60015474010000000000000000000000000000000000000000900460ff1681565b600554600160a060020a0316815600a165627a7a7230582085be75e5a356b8c1eb5be846ecaa53ccf5adc008612ce5de113f0872b9b1626a0029",
+    "functionHashes": {
+        "admin()": "f851a440",
+        "finalResult()": "f3a8286f",
+        "investors(uint256)": "3feb5f2b",
+        "investorsVote(address)": "137eeaa4",
+        "investrosBal(address)": "08410967",
+        "orgAddress()": "797ea25d",
+        "orgBalance()": "9f820650",
+        "proposalAddress(uint256)": "89107dc8",
+        "proposalId()": "2dfca445",
+        "proposalsSum(uint256)": "30a00975",
+        "proposalsWhy(uint256)": "785cbf5b"
+    },
+    "gasEstimates": {
+        "creation": [
+            191,
+            150200
+        ],
+        "external": {
+            "admin()": 746,
+            "finalResult()": 594,
+            "investors(uint256)": 914,
+            "investorsVote(address)": 554,
+            "investrosBal(address)": 520,
+            "orgAddress()": 658,
+            "orgBalance()": 549,
+            "proposalAddress(uint256)": 752,
+            "proposalId()": 417,
+            "proposalsSum(uint256)": 511,
+            "proposalsWhy(uint256)": 555
+        },
+        "internal": {}
+    },
+    "runtimeBytecode": "6060604052600436106100ae5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630841096781146100b3578063137eeaa4146100e45780632dfca4451461011757806330a009751461012a5780633feb5f2b14610140578063785cbf5b14610172578063797ea25d1461018857806389107dc81461019b5780639f820650146101b1578063f3a8286f146101c4578063f851a440146101d7575b600080fd5b34156100be57600080fd5b6100d2600160a060020a03600435166101ea565b60405190815260200160405180910390f35b34156100ef57600080fd5b610103600160a060020a03600435166101fc565b604051901515815260200160405180910390f35b341561012257600080fd5b6100d2610211565b341561013557600080fd5b6100d2600435610217565b341561014b57600080fd5b610156600435610229565b604051600160a060020a03909116815260200160405180910390f35b341561017d57600080fd5b6100d2600435610251565b341561019357600080fd5b610156610263565b34156101a657600080fd5b610156600435610272565b34156101bc57600080fd5b6100d261028d565b34156101cf57600080fd5b610103610293565b34156101e257600080fd5b6101566102b4565b60026020526000908152604090205481565b60036020526000908152604090205460ff1681565b60095481565b60076020526000908152604090205481565b600480548290811061023757fe5b600091825260209091200154600160a060020a0316905081565b60066020526000908152604090205481565b600154600160a060020a031681565b600860205260009081526040902054600160a060020a031681565b60005481565b60015474010000000000000000000000000000000000000000900460ff1681565b600554600160a060020a0316815600a165627a7a7230582085be75e5a356b8c1eb5be846ecaa53ccf5adc008612ce5de113f0872b9b1626a0029"
+}

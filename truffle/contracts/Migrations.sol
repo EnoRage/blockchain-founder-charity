@@ -1,83 +1,109 @@
 pragma solidity ^0.4.18;
 
 
-contract GetMoney {
-    uint totalBalance;
+contract VotingBasic {
+    uint256 public orgBalance; // Сумма, которая организация имеет
+    address public orgAddress; // Адрес организации (назначает админ)
+    mapping(address=>uint256) public investrosBal; // Баланс каждого инвестора
+    address[] public investors; // Список всех, кто вложил деньги на контракт (инвестор)
+    address public admin; // Админ, кто назначает организацию
+    mapping (uint256=>bytes32) public proposalsWhy; // Конкретная причина (описание того, куда потратит организация),
+    //  хранится по uint256 айди для каждой новой затраты  в виде хэша keccak256
+    mapping (uint256=>uint256) public proposalsSum; // Конкретна сумма затраты, хранится по айди затраты
+    mapping (uint256=>address) public proposalAddress; // Конкретный адрес каждой затраты 
+    // на этот адрес перевод proposalsSum идет
+    uint256 public proposalId; // Айди последней затраты
+    mapping (uint256=>mapping(address=>bool)) proposalRes; // Результат голосования по затрате 
+    // По айди затраты и адреса голосовальщика - получаем его результат голосования
+}
 
-    bool allowance;
 
-    address[] investors;
+contract VotingModificators is VotingBasic {
 
-    mapping(address => uint) investorsbal;
-
-    mapping(address => int256) votres;
-
-    bool ffff;
-    
-    modifier allow {
-        for (uint i = 0; i < investors.length; i++) {
-            if (investors[i] == msg.sender) {
-                allowance = true;
-                break;
-            }
-        }
+    modifier onlyOrg() {
+        require(msg.sender == orgAddress);
         _;
     }
 
+    modifier onlyInvestor() {
+        for (uint256 i =0; i < investors.length; i++) {
+            require(msg.sender == investors[i]);
+            _;
+        }
+    }
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin);
+        _;
+    }
+}
+
+
+contract VotingFunctions is VotingModificators {
+    function setOrgAddress(address _orgAddress) public onlyAdmin returns(bool);
+    function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool);
+    function makeProposal(string _propWhy, uint256 _propSum, address _propAddress) public onlyOrg returns(bool);
+    function updateTotalBalance(uint256 _value) internal;
+    function setInvestor(address _invsetor) internal;
+    function setInvestorPie(address _invsetor, uint256 _value) internal;
+}
+
+
+contract VoteMain is VotingFunctions {
+    function VoteMain() {
+        admin = msg.sender;
+    }
+
     function () public payable {
-        updateTotalbalance();
-        investorsbal[msg.sender] += msg.value;
+        updateTotalBalance(msg.value);
+        setInvestor(msg.sender);
+        setInvestorPie(msg.sender, msg.value);
     }
     
-    function investPart() public allow payable returns(uint) {
-        return investorsbal[msg.sender];
+    function setOrgAddress(address _orgAddress) public onlyAdmin returns(bool) {
+        orgAddress = _orgAddress;
+    } 
+
+    function makeProposal(string _propWhy, uint256 _propSum, address _propAddress) public onlyOrg returns(bool) {
+        proposalId += 1;  
+        proposalsWhy[proposalId] = keccak256(_propWhy);
+        proposalsSum[proposalId] = _propSum;
+        proposalAddress[proposalId] = _propAddress;
+        return false;
+    }
+
+    function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool) {
+        proposalRes[_idProp][msg.sender] = _vote;
+    }
+    // for test
+
+    function showBalnAdr() public constant returns(uint256, address) {
+        return (orgBalance, orgAddress);
+    }
+
+    function showInvestorslast() public constant returns(address) {
+        return investors[investors.length];
+    }
+
+    function showProposal(uint256 _id) returns(bytes32, uint256, address) {
+        return (proposalsWhy[_id], proposalsSum[_id], proposalAddress[_id]);
     }
     
-    function vote(int256 res) public allow {
-        if (res == 1) {
-            votres[msg.sender] = (int256)(investorsbal[msg.sender] / 100000000);
-        } else if (res == -1) {
-            votres[msg.sender] = ((int256)(investorsbal[msg.sender]) / 1000000000);
-        }
+    function showResofProposal(uint256 _id, address _voter) public constant returns(bool) {
+        return proposalRes[_id][_voter];
     }
-    
-    function showAdd() public view returns(address) {
-        return investors[0];
+    // for test
+
+    function updateTotalBalance(uint256 _value) internal {
+        orgBalance += _value;
     }
-    
-    function showFinalRes() public view returns(bool) {
-        return ffff;
+
+    function setInvestor(address _invsetor) internal {
+        investors.push(_invsetor);
     }
-    
-    function finalress() public payable returns(bool) {
-        // address a = investors[0];
-        // address b = investors[1];
-        int256 finalres;
-        // int256 finalres = votres[a] + votres[b];
-        
-        for (uint i = 0; i < investors.length; i++) {
-            finalres += votres[investors[i]];
-        }
-        
-        if (finalres > 23000000000) {
-            ffff = true;
-            return true;
-        } else {
-            return false;
-        }
-       
+
+    function setInvestorPie(address _invsetor, uint256 _value) internal {
+        investrosBal[_invsetor] = _value;
     }
-    
-    function showTotal() public payable allow returns(uint) {
-        return totalBalance;
-    }
-    
-    function showVotres() public  payable allow  returns(int256) {
-        return votres[msg.sender];
-    }
-    
-    function updateTotalbalance() internal {
-        investors.push(msg.sender);
-        totalBalance += msg.value;
-    }
+
 }
