@@ -15,6 +15,7 @@ contract VotingBasic {
     uint256 public proposalId; // Айди последней затраты
     mapping (uint256=>mapping(address=>bool)) proposalRes; // Результат голосования по затрате 
     // По айди затраты и адреса голосовальщика - получаем его результат голосования
+    mapping (uint256=>int256) public investersWhoVotedRes;
 }
 
 
@@ -26,10 +27,14 @@ contract VotingModificators is VotingBasic {
     }
 
     modifier onlyInvestor() {
+        bool res;
         for (uint256 i =0; i < investors.length; i++) {
-            require(msg.sender == investors[i]);
-            _;
+            if (msg.sender == investors[i]) {
+                res = true;
+            }
         }
+        require(res);
+        _;
     }
 
     modifier onlyAdmin() {
@@ -42,6 +47,7 @@ contract VotingModificators is VotingBasic {
 contract VotingFunctions is VotingModificators {
     function setOrgAddress(address _orgAddress) public onlyAdmin returns(bool);
     function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool);
+    function countVotesOfProposal(uint256 _idProp) public returns(bool);
     function makeProposal(string _propWhy, uint256 _propSum, address _propAddress) public onlyOrg returns(bool);
     function updateTotalBalance(uint256 _value) internal;
     function setInvestor(address _invsetor) internal;
@@ -50,7 +56,7 @@ contract VotingFunctions is VotingModificators {
 
 
 contract VoteMain is VotingFunctions {
-    function VoteMain() {
+    function VoteMain() public {
         admin = msg.sender;
     }
 
@@ -74,6 +80,20 @@ contract VoteMain is VotingFunctions {
 
     function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool) {
         proposalRes[_idProp][msg.sender] = _vote;
+        if (_vote == true) {
+            investersWhoVotedRes[_idProp] += 1; 
+        } else {
+            investersWhoVotedRes[_idProp] -= 1; 
+        }
+        return false;
+    }
+    
+    function countVotesOfProposal(uint256 _idProp) public returns(bool) {
+        if (investersWhoVotedRes[_idProp] > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
     // for test
 
