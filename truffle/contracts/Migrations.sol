@@ -61,7 +61,7 @@ contract VotingFunctions is VotingModificators {
 
     function makeProposal(string _propWhy, uint256 _propSum, address _propAddress,
             uint256 _propDur) public onlyOrg returns(bool); 
-    // создание предложения(), почему(стринг), сумма (ETH), адрес перевода
+    // создание предложения(), почему(стринг), сумма (ETH/ 10^18), адрес перевода
     
     function setInvestor(address _invsetor) internal;
     // ставит инвестора - инвестором при переводе на контракт
@@ -117,7 +117,7 @@ contract VoteMain is VotingFunctions {
     function askForFinanlTransaction(uint256 _idProp) public returns(bool) {
         setPropStatus(_idProp);
         if (proposalStatus[_idProp] && orgAddress.balance >= proposalsSum[_idProp]) {
-            proposalAddress[_idProp].transfer(proposalsSum[_idProp] * (1000000000000000000));
+            proposalAddress[_idProp].transfer(proposalsSum[_idProp]);
             return true;
         } else {
             return false;
