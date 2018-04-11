@@ -15,7 +15,8 @@ contract VotingBasic {
     uint256 public proposalId; // Айди последней затраты
     mapping (uint256=>mapping(address=>bool)) proposalRes; // Результат голосования по затрате 
     // По айди затраты и адреса голосовальщика - получаем его результат голосования
-    mapping (uint256=>int256) public investersWhoVotedRes;
+    mapping (uint256=>int256) internal investersWhoVotedRes; // по айди предложения финальный результат 
+    // (часто дергается)
 }
 
 
@@ -28,7 +29,7 @@ contract VotingModificators is VotingBasic {
 
     modifier onlyInvestor() {
         bool res;
-        for (uint256 i =0; i < investors.length; i++) {
+        for (uint256 i = 0; i < investors.length; i++) {
             if (msg.sender == investors[i]) {
                 res = true;
             }
@@ -45,13 +46,20 @@ contract VotingModificators is VotingBasic {
 
 
 contract VotingFunctions is VotingModificators {
-    function setOrgAddress(address _orgAddress) public onlyAdmin returns(bool);
-    function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool);
-    function countVotesOfProposal(uint256 _idProp) public returns(bool);
-    function makeProposal(string _propWhy, uint256 _propSum, address _propAddress) public onlyOrg returns(bool);
+    function setOrgAddress(address _orgAddress) public onlyAdmin returns(bool); 
+    // Админ назначает организацию для контракта
+    function voteForProposal(uint256 _idProp, bool _vote) public onlyInvestor returns(bool); 
+    // Инвестор голосует по айди предложения
+    function showFinalResultofProposal(uint256 _idProp) public returns(bool);
+     // Результат голосования по айди предложения виден всем 
+    function makeProposal(string _propWhy, uint256 _propSum, address _propAddress) public onlyOrg returns(bool); 
+    // создание предложения, почему, сумма, адрес перевода
     function updateTotalBalance(uint256 _value) internal;
+    // обновляет баланс аккаунта 
     function setInvestor(address _invsetor) internal;
-    function setInvestorPie(address _invsetor, uint256 _value) internal;
+    // ставит инвестора - инвестором при переводе на контракт
+    function setInvestorPie(address _invsetor, uint256 _value) internal; 
+    // показывает, сколько вкинул инвестор нам на контракт
 }
 
 
@@ -88,7 +96,7 @@ contract VoteMain is VotingFunctions {
         return false;
     }
     
-    function countVotesOfProposal(uint256 _idProp) public returns(bool) {
+    function showFinalResultofProposal(uint256 _idProp) public returns(bool) {
         if (investersWhoVotedRes[_idProp] > 0) {
             return true;
         } else {
@@ -125,5 +133,4 @@ contract VoteMain is VotingFunctions {
     function setInvestorPie(address _invsetor, uint256 _value) internal {
         investrosBal[_invsetor] = _value;
     }
-
 }
