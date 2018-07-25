@@ -6,7 +6,7 @@
 Golang backend - Nick Kozlov, Kirill Kuznetov *Telegram bot*
 Mobile Xamarin - Max Spr.
 
-# Тут несколько веток для жюри
+# Тут несколько веток
 
 *master* - golang telegram bot на докере в кластере
 
